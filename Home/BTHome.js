@@ -59,7 +59,10 @@ export default class Home extends Component{
                onChange={(isOpen)=>this.updateMenuState(isOpen)}>
       <View style={styles.container}>
       <View style={styles.SearchBarContainer}>
-      <Image source={require('../images/BTLogo.png')} style={styles.sideMenu}/>
+      <Button onPress={()=>this.toggle()}>
+          <Image source={require('../images/menu.png')} style={styles.button}/>
+      </Button>
+
       <View style={styles.searchBox}>
 
           <Image source={require('../images/icon_shop_search.png')}
@@ -71,9 +74,7 @@ export default class Home extends Component{
               underlineColorAndroid={'transparent'}
           />
     </View>
-      <Button onPress={()=>this.toggle()}>
-          <Image source={require('../images/menu.png')} style={styles.button}/>
-      </Button>
+      <Image source={require('../images/BTLogo.png')} style={styles.sideMenu}/>
 
         </View>
 
