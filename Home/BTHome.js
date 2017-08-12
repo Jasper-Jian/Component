@@ -205,7 +205,7 @@ export default class Home extends Component{
       return indicatorArr;
     }
     onAnimationEnd(e){
-      var offsetX= e.nativeEvent.contentOffset.x+30;
+      var offsetX= e.nativeEvent.contentOffset.x+6;
       var currentPage = Math.floor(offsetX / Dimensions.get('window').width);
       console.log(currentPage);
       this.setState({currentPage:currentPage});
