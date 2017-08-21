@@ -12,11 +12,30 @@ import{
 } from 'react-native';
 import Mine from './BTMine';
 import Admin from './Admin';
+import {firebaseRef} from '../services/firebase';
+
 var Dimensions = require('Dimensions');
 var width = Dimensions.get('window').width;
 export default class Register extends Component{
   constructor(props) {
       super(props);
+
+      this.state={
+        email:'',
+        password:'',
+        verifyPassword:''
+      }
+      this._register = this._register.bind(this);
+  }
+  _register(){
+    if(this.state.password == this.state.verifyPassword){
+      firebaseRef.auth().createUserWithEmailAndPassword(this.state.email,this.state.password).catch(function(error){
+        console.log(error.code);
+        console.log(error.message);
+      })
+    }else{
+      console.console.log("Passwords did not match");
+    }
   }
     render(){
     return (
@@ -30,7 +49,7 @@ export default class Register extends Component{
                     //placeholder
                     placeholder='Please Enter Your Email'
                     textAlign='center'
-                    onChangeText={(input) => this.setState({username: input})}
+                    onChangeText={(text) => this.setState({email: text})}
                     underlineColorAndroid={'transparent'} />
             </View>
             {/*password input box*/}
@@ -41,7 +60,7 @@ export default class Register extends Component{
                     placeholder='Please Enter Your Password'
                     textAlign='center'
                     //invisibility of password
-                  onChangeText={(input) => this.setState({userpwd: input})}
+                  onChangeText={(text) => this.setState({password: text})}
                     secureTextEntry={true}/>
             </View>
             <View style={styles.textInputViewStyle}>
@@ -49,11 +68,11 @@ export default class Register extends Component{
                     style={styles.textInputStyle}
                     placeholder='Please Confrim Your Password'
                     textAlign='center'
-
+                    onChangeText={(text) => this.setState({verifyPassword: text})}
                     //invisibility of password
                     secureTextEntry={true}/>
             </View>
-            <TouchableOpacity onPress={()=>this.loginInMainpage()}>
+            <TouchableOpacity onPress={this._register}>
                 {/*register button*/}
                 <View style={styles.textLoginViewStyle}>
                     <Text style={styles.textLoginStyle}>Register</Text>
@@ -72,27 +91,6 @@ export default class Register extends Component{
     }
     _pushBack() {
         this.props.navigator.pop(Mine);
-    }
-    loginInMainpage() {
-    this.refs.inputLoginName.blur();
-    this.refs.inputLoginPwd.blur();
-    this.props.navigator.resetTo({
-        component: Admin,
-        params: {
-            logNmae: this.state.username,
-            logPwd: this.state.userpwd,
-            parentComponent: this,
-            ...this.props
-        },
-    });
-    }
-
-    setLoginName(input) {
-        this.setState = {inputName: input}
-    }
-
-    setLoginPwd(input) {
-        this.setState = {inputPwd: input}
     }
 }
 const styles = StyleSheet.create({

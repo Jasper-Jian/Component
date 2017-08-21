@@ -8,11 +8,13 @@ import {
   TextInput,
   Platform,
   TouchableOpacity,
-  Navigator
+  Navigator,
+  WebView
 } from 'react-native';
 import {LoginManager, LoginButton, AccessToken} from 'react-native-fbsdk';
 import {GoogleSignin, GoogleSigninButton} from 'react-native-google-signin';
-
+import {firebaseRef} from '../services/firebase';
+import firebase from 'firebase';
 //get screen info
 var Dimensions = require('Dimensions');
 var width = Dimensions.get('window').width;
@@ -20,132 +22,30 @@ var width = Dimensions.get('window').width;
 /*import external component*/
 import Register from './Register';
 import Admin from './Admin';
+
 export default class Mine extends Component{
   constructor(props) {
     super(props);
-    this.state = {
+    this.state={
+      email:'',
+      password:'',
+      status:'',
       user: null
-    };
+    }
+    this._login = this._login.bind(this);
+
   }
+  _login(){
+    firebaseRef.auth().signInWithEmailAndPassword(this.state.email,this.state.password).catch(function(error){
+      console.log(error.code);
+      console.log(error.message);
+    })
+  }
+
   componentDidMount() {
     this._setupGoogleSignin();
   }
-  render() {
-    if (!this.state.user) {
-      return (
-          <View style={styles.container}>
-            <Image source={{uri: 'https://basement-theatre.squarespace.com/assets/images/logo-expanded.png'}} style={styles.itemStyle}>
-              {/*use View to make username txt box*/}
-              <View style={styles.LoginBox}>
-              <View style={styles.textInputViewStyle}>
-                  <TextInput
-                    ref="inputLoginName"
-                    autoFocus={true}
-                      style={styles.textInputStyle}
-                      //placeholder
-                      placeholder='Please Enter Your Username or Email'
-                      textAlign='center'
-                      underlineColorAndroid={'transparent'}
-                      onChangeText={(input) => this.setState({username: input})}/>
-              </View>
 
-              {/*password input box*/}
-              <View style={styles.textInputViewStyle}>
-                  <TextInput
-                    ref="inputLoginPwd"
-                    clearTextOnFocus={true}
-                    clearButtonMode="while-editing"
-                      style={styles.textInputStyle}
-                      placeholder='Please Enter Your Password'
-                      textAlign='center'
-                      //invisibility of password
-                      secureTextEntry={true}
-                    onChangeText={(input) => this.setState({userpwd: input})}/>
-              </View>
-
-              {/*clickable button*/}
-              <TouchableOpacity onPress={()=>{this.loginInMainpage()}}>
-                  {/*login button*/}
-                  <View style={styles.textLoginViewStyle}>
-                      <Text style={styles.textLoginStyle}>Login</Text>
-                  </View>
-              </TouchableOpacity>
-
-              {/*register button*/}
-              <TouchableOpacity onPress={() => { this._ToRegister()}}>
-                 <View style={styles.textLoginViewStyle}>
-                      <Text style={styles.textLoginStyle}>Register</Text>
-                  </View>
-              </TouchableOpacity>
-
-              {/*Facebook Login button*/}
-              <TouchableOpacity onPress={() => { this._fbAuth()}}>
-                  {/*register button*/}
-                  <View style={styles.textLoginViewStyle}>
-                    <LoginButton
-                      publishPermissions={["publish_actions"]}
-                      onLoginFinished={
-                        (error, result) => {
-                          if (error) {
-                            alert("login has error: " + result.error);
-                          } else if (result.isCancelled) {
-                            alert("login is cancelled.");
-                          } else {
-                            AccessToken.getCurrentAccessToken().then(
-                              (data) => {
-                                alert(data.accessToken.toString())
-                              }
-                            )
-                          }
-                        }
-                      }
-                      onLogoutFinished={() => alert("logout.")}/>
-                  </View>
-
-              </TouchableOpacity>
-               <GoogleSigninButton style={styles.textLoginViewStyle} color={GoogleSigninButton.Color.Light} size= {GoogleSigninButton.Size.Icon} onPress={() => { this._signIn(); }}/>
-               </View>
-
-               </Image>
-
-          </View>
-
-      );
-  }
-  if (this.state.user) {
-     return (
-       <View style={styles.container}>
-         <Text style={{fontSize: 18, fontWeight: 'bold', marginBottom: 20}}>Welcome {this.state.user.name}</Text>
-         <Text>Your email is: {this.state.user.email}</Text>
-
-         <TouchableOpacity onPress={() => {this._signOut(); }}>
-           <View style={{marginTop: 50}}>
-             <Text>Log out</Text>
-           </View>
-         </TouchableOpacity>
-       </View>
-     );
-   }
-}
-    loginInMainpage() {
-    this.refs.inputLoginName.blur();
-    this.refs.inputLoginPwd.blur();
-    this.props.navigator.push({
-        component: Admin,
-        params: {
-            logName: this.state.username,
-            logPwd: this.state.userpwd,
-            parentComponent: this,...this.props
-        },
-    });
-    }
-    setLoginName(input) {
-        this.setState = {inputName: input}
-    }
-
-    setLoginPwd(input) {
-        this.setState = {inputPwd: input}
-    }
   async _setupGoogleSignin() {
     try {
       await GoogleSignin.hasPlayServices({ autoResolve: true });
@@ -173,6 +73,13 @@ export default class Mine extends Component{
   _signIn() {
     GoogleSignin.signIn().then((user) => {
       this.setState({user: user});
+      // const credential = firebase.auth.GoogleAuthProvider.credential(accessTokenData.accessToken);
+      // firebase.auth().signInWithCredential(credential).then((result)=>{
+      //   //promise was successful
+      // },(error)=>{
+      //   //promis was rejected
+      //   console.log(error);
+      // })
     })
     .catch((err) => {
       alert('WRONG SIGNIN', err);
@@ -182,11 +89,21 @@ export default class Mine extends Component{
 
 
   _fbAuth() {
-      LoginManager.logInWithReadPermissions(['public_profile']).then(function (result) {
+      LoginManager.logInWithReadPermissions(['public_profile','email']).then(function (result) {
           if (result.isCancelled) {
               alert('Login cancelled');
           } else {
-              alert('Login success:' + result.grantedPermissions);
+            AccessToken.getCurrentAccessToken().then((accessTokenData) => {
+              const credential = firebase.auth.FacebookAuthProvider.credential(accessTokenData.accessToken);
+              firebase.auth().signInWithCredential(credential).then((result)=>{
+                //promise was successful
+              },(error)=>{
+                //promis was rejected
+                console.log(error);
+              })
+            },(error =>{
+              console.console.log('Some erroe occured: '+error);
+            }))
           }
       },
           function (error) {
@@ -202,8 +119,109 @@ export default class Mine extends Component{
           }
       );
   }
-}
 
+    render() {
+      if (!this.state.user) {
+        return (
+            <View style={styles.container}>
+              <Image source={{uri: 'https://basement-theatre.squarespace.com/assets/images/logo-expanded.png'}} style={styles.itemStyle}>
+                {/*use View to make username txt box*/}
+                <View style={styles.LoginBox}>
+                <View style={styles.textInputViewStyle}>
+                    <TextInput
+                      autoFocus={true}
+                        style={styles.textInputStyle}
+                        //placeholder
+                        placeholder='Please Enter Your Email'
+                        textAlign='center'
+                        underlineColorAndroid={'transparent'}
+                        onChangeText={(text) => this.setState({email: text})}/>
+                </View>
+
+                {/*password input box*/}
+                <View style={styles.textInputViewStyle}>
+                    <TextInput
+                      ref="inputLoginPwd"
+                      clearTextOnFocus={true}
+                      clearButtonMode="while-editing"
+                        style={styles.textInputStyle}
+                        placeholder='Please Enter Your Password'
+                        textAlign='center'
+                        //invisibility of password
+                        secureTextEntry={true}
+                      onChangeText={(text) => this.setState({email: text})}/>
+                </View>
+
+                {/*clickable button*/}
+                <TouchableOpacity onPress={this._login}>
+                    {/*login button*/}
+                    <View style={styles.textLoginViewStyle}>
+                        <Text style={styles.textLoginStyle}>Login</Text>
+                    </View>
+                </TouchableOpacity>
+
+                {/*register button*/}
+                <TouchableOpacity onPress={() => { this._ToRegister()}}>
+                   <View style={styles.textLoginViewStyle}>
+                        <Text style={styles.textLoginStyle}>Register</Text>
+                    </View>
+                </TouchableOpacity>
+
+                {/*Facebook Login button*/}
+                <TouchableOpacity style={styles.textfbLoginViewStyle} onPress={() => {this._fbAuth()}}>
+                      <LoginButton
+                        publishPermissions={["publish_actions"]}
+                        onLoginFinished={
+                          (error, result) => {
+                            if (error) {
+                              alert("login has error: " + result.error);
+                            } else if (result.isCancelled) {
+                              alert("login is cancelled.");
+                            } else {
+
+                              AccessToken.getCurrentAccessToken().then(
+                                (data) => {
+                                  //login success when to the mine page
+                                  alert(data.accessToken.toString());
+                                }
+                              )
+                            }
+                          }
+                        }
+                        onLogoutFinished={() => alert("logout.")}/>
+
+
+                </TouchableOpacity>
+                 <GoogleSigninButton style={styles.textgoogleLoginViewStyle} color={GoogleSigninButton.Color.Light}  onPress={() => { this._signIn(); }}/>
+                 </View>
+
+                 </Image>
+
+            </View>
+
+        );
+    }
+    if (this.state.user) {
+       return (
+         <View style={styles.container}>
+           <Text style={{fontSize: 18, fontWeight: 'bold', marginBottom: 20}}>Welcome {this.state.user.name}</Text>
+           <Text>Your email is: {this.state.user.email}</Text>
+           <TouchableOpacity onPress={() => {this._signOut(); }}>
+             <View style={styles.LogoutViewStyle}>
+               <Text style={styles.textLoginStyle}>Log out</Text>
+             </View>
+           </TouchableOpacity>
+           <WebView
+             startInLoadingState={true}
+             contentInset={{top:20,left:10,right:10}}
+             scalesPageToFit ={false}
+             source={{uri: 'https://docs.google.com/forms/d/1QypBHmk8ktWXmobJ1HTF3JyiduykRsMVmm96kqVT_O0/viewform?edit_requested=true'}}
+           />
+         </View>
+       );
+     }
+  }
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -242,6 +260,37 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    textgoogleLoginViewStyle: {
+        width: 190,
+        height: 45,
+        borderRadius: 10,
+        marginTop: 20,
+        marginRight:60,
+        alignSelf: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    textfbLoginViewStyle: {
+        width: 250,
+        height: 45,
+        borderRadius: 10,
+        marginTop: 25,
+        marginRight:60,
+        alignSelf: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    LogoutViewStyle:{
+      width: 150,
+      height: 28,
+      backgroundColor: 'rgba(255,0,0,.9)',
+      borderRadius: 10,
+      marginTop: 15,
+      marginBottom: 5,
+      alignSelf: 'flex-end',
+      justifyContent: 'flex-end',
+      alignItems: 'center',
     },
     //"Login" style
     textLoginStyle: {

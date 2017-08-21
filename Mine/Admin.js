@@ -7,32 +7,15 @@ import {
     Navigator,
     TouchableOpacity
 } from 'react-native';
-import Firebase from 'firebase';
+import firebase from 'firebase';
 import Register from './Register';
 export default class Admin extends Component {
     constructor(props) {
         super(props);
+        //这里获取从FirstPageComponent传递过来的参数: id
+
     }
 
-
-    componentDidMount() {
-            //这里获取从FirstPageComponent传递过来的参数: id
-            this.setState({
-                user:this.props.logName,
-                pwd:this.props.logPwd
-            });
-            const myFirebaseRef = new Firebase('https://.firebaseio.com');
-
-               myFirebaseRef.set({
-                 title: "Hello World!",
-                 author: "Simon",
-                 location: {
-                   city: "Muenster",
-                   state: "Germany",
-                   zip: 48155
-                 }
-               });
-             }
 
     render() {
         return (<View style={styles.container}>
