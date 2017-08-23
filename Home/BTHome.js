@@ -10,10 +10,11 @@ import {
   Image,
   Platform,
   TouchableOpacity,
-   Linking,
+  Linking,
+  Navigator,
 } from 'react-native';
 import SideMenu from 'react-native-side-menu';
-import Menu from '../Home/TabMenu';
+import Menu from '../Home/defaultTabMenu';
 import styles from '../StylesSheet';
 import Bar from '../More/Bar';
 import Event from '../Event/BTEvent';
@@ -22,16 +23,16 @@ import EventDetail from '../Event/BTEventDetail';
 var ImageData = require('../ImageData.json');
 var TimerMixin = require('react-timer-mixin');//import timer
 
-var {width}=Dimensions.get('window').width;
+let {width,height} = Dimensions.get('window');
 
 export default class Home extends Component{
-  constructor(props) {
-    super(props);
-    this.state={
-        currentPage:0,
-        isOpen:false,
-        selectedItem:'About'
-      }
+    constructor(props) {
+        super(props);//这一句不能省略，照抄即可
+        this.state={
+            // selectedTab:'home'
+            isOpen:false,
+            selectedItem:'Home'
+        }
     }
     toggle(){
         this.setState({
@@ -50,13 +51,16 @@ export default class Home extends Component{
         })
     }
   render() {
-    const menu =<Menu onItemSelected={this.onMenuItemSelected}/>;
+    const menu=<Menu onItemSelected={this.onMenuItemSelected}/>;
     return (
       <SideMenu
                menu={menu}
-               isOpen ={this.state.isOpen}
-               //openMenuOffset={Dimensions.get('window').width}
-               onChange={(isOpen)=>this.updateMenuState(isOpen)}>
+               isOpen={this.state.isOpen}
+            onChange={(isOpen)=>this.updateMenuState(isOpen)}
+            menuPosition={'left'}//侧边栏是左边还是右边
+            openMenuOffset={0.8*width}//侧边栏的宽度
+            edgeHitWidth={200}//手指拖动可以打开侧边栏的距离（距离侧边栏）
+      >
       <View style={styles.container}>
       <View style={styles.SearchBarContainer}>
       <Button onPress={()=>this.toggle()}>
@@ -73,7 +77,7 @@ export default class Home extends Component{
               placeholder='Search Events'
               underlineColorAndroid={'transparent'}
           />
-    </View>
+      </View>
       <Image source={require('../images/BTLogo.png')} style={styles.sideMenu}/>
 
         </View>
@@ -233,6 +237,8 @@ export default class Home extends Component{
        console.log('An error occurred', err);
      });
   }
+
+
 
 }
 class Button extends Component{

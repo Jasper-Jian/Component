@@ -45,6 +45,9 @@ export default class defaultMore extends Component{
   render() {
     return (
       <View style={styles.container}>
+      <View style={styles.headerBarContainer}>
+      <Text style={styles.headText}>More</Text>
+      </View>
       <ScrollView>
       <View style={styles.space}>
       </View>
@@ -95,6 +98,24 @@ const styles = StyleSheet.create({
     flex:1,
     flexDirection:'column',
     backgroundColor: '#F5FCFF',
+  },
+  headerBarContainer: {
+      flexDirection: 'column',
+      paddingLeft: 10,
+      paddingRight: 10,
+      paddingTop: 0,
+      height: 48,
+      backgroundColor: '#C0CCD9',
+      alignItems: 'center',
+
+  },
+  headText: {
+    paddingTop: 8,
+    color:'black',
+    fontSize:24,
+    fontWeight:'bold',
+    textAlign :'center',
+
   },
   headImage: {
     width:Dimensions.get('window').width-30,

@@ -12,6 +12,10 @@ import {
 } from 'react-native';
 
 export default class Support extends Component {
+  static defaultProps = {
+    title: 'Support'
+  };
+
   clickJump(){
     const{navigator} = this.props;
     if(navigator){
@@ -49,8 +53,21 @@ export default class Support extends Component {
           </Text>
           </Text>
           <View style={styles.Divider}></View>
+          <Text style={styles.bigText}>
+          {'\n'}GET INVOLVED!{'\n'}
+          </Text>
           <Text style={styles.textStyle}>
-          GET INVOLVED!
+          Click here to donate to The Basement Theatre’s Give a Little page{'\n'}{'\n'}
+          Click here to donate to The Basement Theatre’s Schools Programme Give a Little page{'\n'}{'\n'}
+          If your business is interested in supporting The Basement, or one of our programmes, please contact:{'\n'}{'\n'}
+          Sam Snedden{'\n'}
+          Business and Industry Development Manager{'\n'}
+          Phone +64 9 302 2960{'\n'}
+          sam@basementtheatre.co.nz{'\n'}{'\n'}
+          </Text>
+          <View style={styles.Divider}></View>
+          <Text style={styles.bigText}>
+          {'\n'}BIG UPS TO THESE RAD ORGANISATIONS FOR THEIR ONGOING SUPPORT!{'\n'}{'\n'}
           </Text>
         </View>
 
@@ -103,8 +120,9 @@ const styles = StyleSheet.create({
       borderBottomColor : '#C0CCD9',
     },
     bigText:{
-      fontSize: 16,
+      fontSize: 24,
       color: 'black',
       lineHeight: 30,
+      fontWeight:'bold',
     }
   })

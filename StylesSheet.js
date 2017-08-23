@@ -37,8 +37,8 @@ const StylesSheet = StyleSheet.create({
     alignItems:'center',
   },
   TitleText:{
-    fontSize:26,
-    color:'rgba(255,255,255,1)',
+    fontSize:24,
+    color:'black',
     fontWeight:'800',
   },
   MoreInfoText:{

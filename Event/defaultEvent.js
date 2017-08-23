@@ -43,6 +43,9 @@ export default class defaultEvent extends Component{
   render() {
       return (
         <View style={styles.container}>
+        <View style={styles.headerBarContainer}>
+        <Text style={styles.headText}>Event</Text>
+        </View>
           <ScrollView>
              <Text style={styles.ComingSoonText}>
              Coming Soon Event
@@ -163,19 +166,37 @@ export default class defaultEvent extends Component{
 }
 
 const styles = StyleSheet.create({
-  container:{
+  container: {
     flexDirection:'column',
-    backgroundColor:'rgba(0,90,171,1)',
+    backgroundColor:'#C0CCD9',
+  },
+  headerBarContainer: {
+      flexDirection: 'column',
+      paddingLeft: 10,
+      paddingRight: 10,
+      paddingTop: 0,
+      height: 48,
+      backgroundColor: '#C0CCD9',
+      alignItems: 'center',
+
+  },
+  headText: {
+    paddingTop: 8,
+    color:'black',
+    fontSize:24,
+    fontWeight:'bold',
+    textAlign :'center',
+
   },
   EventTimeText:{
-    color:'rgba(255,222,0,1)',
+    color:'black',
     fontSize:18,
     fontWeight:'400',
   },
   EventImageBox:{
     flexDirection:'row',
     margin:5,
-    backgroundColor:'rgba(0,90,171,1)',
+    backgroundColor:'#C0CCD9',
   },
   EventImageItem:{
    height:100,
@@ -187,7 +208,7 @@ const styles = StyleSheet.create({
     borderStyle:'solid',
     borderBottomWidth:1,
     margin:3,
-    borderBottomColor : 'rgba(255,255,255,1)',
+    borderBottomColor : 'black',
   },
   ComingSoonText:{
     fontSize:26,

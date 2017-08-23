@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import ScrollableTabView, {DefaultTabBar, } from 'react-native-scrollable-tab-view';
+import StarRatingBar from 'react-native-star-rating-view/StarRatingBar';
 import {
   StyleSheet,
   Image,
@@ -8,11 +10,13 @@ import {
   TouchableOpacity,
   ScrollView,
   BackAndroid,
-  Linking
+  Linking,
+  Navigator,
 } from 'react-native';
 
 import Mainstyles from '../StylesSheet';
 import Event from '../Event/BTEventDetail';
+import review from '../Event/review';
 var {width}=Dimensions.get('window').width;
 var DEFAULT_URL = 'https://www.iticket.co.nz/events/2017/may/the-faustus-project';
 export default class EventDetails extends Component{
@@ -22,7 +26,10 @@ export default class EventDetails extends Component{
       navigator.pop();
     }
   }
+
   render() {
+    let defaultName = 'review';
+    let defaultComponent = review;
     return (
       <View style={styles.container}>
         <View style={styles.headerBarContainer}>
@@ -31,60 +38,33 @@ export default class EventDetails extends Component{
                 style={styles.backButton}
           />
         </TouchableOpacity>
+        <Text style={styles.headText}>Event</Text>
         </View>
-        <ScrollView>
         <Image key={1} source={{uri: 'https://static1.squarespace.com/static/5535bce1e4b071a2f7e12732/55a85f73e4b0a37bc13840e6/58b52eade4fcb5991e72c16e/1488268974401/TASSEL1200.JPG'}} style={Mainstyles.itemStyle}/>
-        <View>
-          <View style={styles.DetailBox}>
-            <Text style={Mainstyles.TitleText}>
-              Tassel Me This
-            </Text>
-            <Text style={styles.MoreInfoText}>Shani Dickins & Jessie McCall hunt amongst glittering personal baggage for a Spectassular to call their own.
-            </Text>
-            <Text style={styles.MoreInfoText}>
-            A dance theatre romp for anyone who has clung (for dear life) to a certain special moment.Winner of Best of Fringe 2015 at the Dunedin Fringe.
-            </Text>
-            <Text style={styles.MoreInfoText}>
-            A brilliant visual masterpiece - Theatreview.
-            </Text>
-            <Text style={styles.MoreInfoText}>
-            DATE: 11 APR - 15 APR
-            </Text>
-            <Text style={styles.MoreInfoText}>
-            TIME: 8:00 PM
-            </Text>
-            <Text style={styles.MoreInfoText}>
-            RUNTIME: 50 MINUTES
-            </Text>
-            <Text style={styles.MoreInfoText}>
-            VENUE: THEATRE
-            </Text>
-            <Text style={styles.MoreInfoText}>
-            PRICE: $16 - $20
-            </Text>
-          </View>
-            <TouchableOpacity onPress={() => {Linking.openURL(DEFAULT_URL)}}>
-              <View style={styles.textLoginViewStyle}>
-                  <Text style={styles.ButtonText}>Book Now</Text>
-              </View>
-            </TouchableOpacity>
-            <Text style={styles.MoreInfoText}>
-            * Concession prices available to: Seniors 65+, Students with ID, Equity Members with ID.
-            </Text>
-        </View>
-      </ScrollView>
+      <Navigator
+          initialRoute = {{name: defaultName, component: defaultComponent}}
+          configureScene = {(route) => {
+            return Navigator.SceneConfigs.FloatFromRight;}}
+          renderScene = {(route, navigator) =>{
+            let Component = route.component;
+            return <Component{...route.params} navigator = {navigator} />}}
+      />
       </View>
+
     );
-  }
-  _Back(){
-      this.props.navigator.pop(Event); // 返回上一页
   }
 };
 const styles = StyleSheet.create({
   container:{
     flexDirection:'column',
-    backgroundColor:'rgba(133,175,164,1)',
+    backgroundColor:'#C0CCD9',
     flex:1,
+  },
+  titleText: {
+    color:'black',
+    fontWeight:'bold',
+    fontSize: 24,
+    lineHeight: 30,
   },
   headerBarContainer: {
       flexDirection: 'row',
@@ -95,6 +75,15 @@ const styles = StyleSheet.create({
       backgroundColor: '#C0CCD9',
       alignItems: 'center',
   },
+  headText: {
+    paddingTop: 0,
+    paddingLeft: 85,
+    color:'black',
+    fontSize:24,
+    fontWeight:'bold',
+    textAlign :'center',
+
+  },
   EventTimeText:{
     color:'white',
     fontSize:18,
@@ -104,10 +93,11 @@ const styles = StyleSheet.create({
       flexDirection:'row',
   },
   DetailBox:{
-    margin: 15,
     justifyContent:'flex-start',
     alignSelf:'flex-start',
-    alignItems:'flex-start'
+    alignItems:'flex-start',
+    paddingLeft: 50,
+    paddingRight: 50,
   },
   Divider:{
     borderStyle:'solid',
@@ -115,16 +105,16 @@ const styles = StyleSheet.create({
     borderBottomColor : 'white',
   },
   MoreInfoText:{
-    marginTop:8,
     color:'black',
     fontWeight:'400',
-    fontSize: 20,
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
+    fontSize: 16,
+    lineHeight: 30,
   },
   textLoginViewStyle: {
-      width: 400,
+      width: 200,
       height: 45,
       backgroundColor: 'rgba(206,60,100,1)',
       borderRadius: 20,
@@ -140,5 +130,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
-  }
+  },
+  space:{
+    height: 80,
+    backgroundColor: 'transparent',
+  },
 });
