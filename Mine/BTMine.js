@@ -18,6 +18,14 @@ import firebase from 'firebase';
 //get screen info
 var Dimensions = require('Dimensions');
 var width = Dimensions.get('window').width;
+//https://www.youtube.com/watch?v=7lEU1UEw3YI&t=765s storing data in the database
+// 改setstate里面的user 值
+//
+// or 把user 值 代入 到 其他data里面在login 那里
+//
+// 然后在logout 的时候把其他的state 清 0
+//
+// 在login的时候把user值设置一下不为空就好了 然后整合一起
 
 /*import external component*/
 import Register from './Register';
@@ -65,6 +73,11 @@ export default class Mine extends Component{
 
   _signOut() {
     GoogleSignin.revokeAccess().then(() => GoogleSignin.signOut()).then(() => {
+      firebase.auth().signOut().then(function() {
+      // Sign-out successful.
+      }, function(error) {
+      // An error happened.
+      });
       this.setState({user: null});
     })
     .done();
@@ -72,22 +85,25 @@ export default class Mine extends Component{
 
   _signIn() {
     GoogleSignin.signIn().then((user) => {
-      this.setState({user: user});
-      // const credential = firebase.auth.GoogleAuthProvider.credential(accessTokenData.accessToken);
-      // firebase.auth().signInWithCredential(credential).then((result)=>{
-      //   //promise was successful
-      // },(error)=>{
-      //   //promis was rejected
-      //   console.log(error);
-      // })
-    })
-    .catch((err) => {
-      alert('WRONG SIGNIN', err);
-    })
-    .done();
-  }
 
-
+      const credential = firebase.auth.GoogleAuthProvider.credential(user);
+      firebase.auth().signInWithCredential(credential).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // The email of the user's account used.
+      var email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      var credential = error.credential;
+      // ...
+      });
+            this.setState({user: user});
+      })
+      .catch((err) => {
+        alert('WRONG SIGNIN', err);
+      })
+      .done();
+    }
   _fbAuth() {
       LoginManager.logInWithReadPermissions(['public_profile','email']).then(function (result) {
           if (result.isCancelled) {
