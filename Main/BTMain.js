@@ -5,7 +5,9 @@ import {
     View,
     Image,
     Platform,   // define platform
-    Navigator
+    Navigator,
+    BackAndroid,
+    ToastAndroid
 } from 'react-native';
 
 
@@ -19,12 +21,31 @@ import Mine from '../Mine/BTMine';
 import More from '../More/BTMore';
 const HOME = 'home';
 export default class Main extends Component{
-
     // initialize home page state
     constructor(props) {
         super(props);
         this.state = {selectedTab: HOME}
     }
+    componentWillMount(){
+      BackAndroid.addEventListener('hardwareBackPress',this.onBackAndroid);
+    }
+
+    componentWillUnmount() {
+      BackAndroid.removeEventListener('hardwareBackPress', this.onBackAndroid);
+    }
+
+    onBackAndroid = () => {
+     if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
+        //cilck the back key two times in two second to exit the application
+          return false;
+      }
+
+    this.lastBackPressed = Date.now();
+
+    ToastAndroid.show('Press again to exit application', ToastAndroid.SHORT);
+    return true;
+
+    };
     render() {
         return (
             <TabNavigator tabBarStyle={{ backgroundColor:'#F5FFFA' }} >
