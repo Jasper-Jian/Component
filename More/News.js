@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   Navigator,
   TextInput,
+  WebView
 } from 'react-native';
 
 export default class News extends Component {
@@ -30,11 +31,12 @@ export default class News extends Component {
         />
       </TouchableOpacity>
       </View>
-      <ScrollView>
-        <Image source={require('../images/News_Head_Image.png')}
-              style={styles.headImage}
-        />
-      </ScrollView>
+      <WebView
+        startInLoadingState={true}
+        contentInset={{top:20,left:10,right:10}}
+        scalesPageToFit ={false}
+        source={{uri: 'https://basement-theatre.squarespace.com/news/'}}
+      />
       </View>
     );
   }

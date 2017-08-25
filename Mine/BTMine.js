@@ -9,9 +9,10 @@ import {
   Platform,
   TouchableOpacity,
   Navigator,
-  WebView
+  WebView,
+  ToastAndroid
 } from 'react-native';
-import {LoginManager, LoginButton, AccessToken} from 'react-native-fbsdk';
+import {LoginManager, LoginButton, AccessToken,FBAccessToken} from 'react-native-fbsdk';
 import {GoogleSignin, GoogleSigninButton} from 'react-native-google-signin';
 import {firebaseRef} from '../services/firebase';
 import firebase from 'firebase';
@@ -45,8 +46,15 @@ export default class Mine extends Component{
   }
   _login(){
     firebaseRef.auth().signInWithEmailAndPassword(this.state.email,this.state.password).catch(function(error){
-      console.log(error.code);
-      console.log(error.message);
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      if (errorCode === 'auth/wrong-password') {
+        ToastAndroid.show('Wrong password', ToastAndroid.SHORT);
+      } else {
+        ToastAndroid.show(errorMessage, ToastAndroid.SHORT);
+      }
+      console.log(error);
     })
   }
 
@@ -75,6 +83,7 @@ export default class Mine extends Component{
     GoogleSignin.revokeAccess().then(() => GoogleSignin.signOut()).then(() => {
       firebase.auth().signOut().then(function() {
       // Sign-out successful.
+      ToastAndroid.show('Sign-out successful', ToastAndroid.SHORT);
       }, function(error) {
       // An error happened.
       });
@@ -97,17 +106,17 @@ export default class Mine extends Component{
       var credential = error.credential;
       // ...
       });
-            this.setState({user: user});
+        this.setState({user: user});
       })
       .catch((err) => {
-        alert('WRONG SIGNIN', err);
+        console.log(err);
       })
       .done();
     }
   _fbAuth() {
       LoginManager.logInWithReadPermissions(['public_profile','email']).then(function (result) {
           if (result.isCancelled) {
-              alert('Login cancelled');
+              ToastAndroid.show('Login cancelled', ToastAndroid.SHORT);
           } else {
             AccessToken.getCurrentAccessToken().then((accessTokenData) => {
               const credential = firebase.auth.FacebookAuthProvider.credential(accessTokenData.accessToken);
@@ -115,10 +124,10 @@ export default class Mine extends Component{
                 //promise was successful
               },(error)=>{
                 //promis was rejected
-                console.log(error);
+                console.log(console.error());
               })
             },(error =>{
-              console.console.log('Some erroe occured: '+error);
+              console.log('Some erroe occured: '+error);
             }))
           }
       },
@@ -184,36 +193,57 @@ export default class Mine extends Component{
                 </TouchableOpacity>
 
                 {/*Facebook Login button*/}
-                <TouchableOpacity style={styles.textfbLoginViewStyle} onPress={() => {this._fbAuth()}}>
-                      <LoginButton
-                        publishPermissions={["publish_actions"]}
-                        onLoginFinished={
-                          (error, result) => {
-                            if (error) {
-                              alert("login has error: " + result.error);
-                            } else if (result.isCancelled) {
-                              alert("login is cancelled.");
-                            } else {
+    <TouchableOpacity style={styles.textfbLoginViewStyle} onPress={() => {this._fbAuth()}}>
+      <LoginButton
+        publishPermissions={["publish_actions"]}
+        onLoginFinished={
+          (error, result) => {
+            if (error) {
+              alert("login has error: " + result.error);
+            } else if (result.isCancelled) {
+              alert("login is cancelled.");
+            } else {
+              AccessToken.getCurrentAccessToken().then((data) => {
+            let accessToken = data.accessToken
+            alert(accessToken.toString())
+            const responseInfoCallback = (error, result) => {
+              if (error) {
+                console.log(error)
+                alert('Error fetching data: ' + error.toString());
+              } else {
+                console.log(result)
+                alert('Success fetching data: ' + result.toString());
+              }
+            }
 
-                              AccessToken.getCurrentAccessToken().then(
-                                (data) => {
-                                  //login success when to the mine page
-                                  alert(data.accessToken.toString());
-                                }
-                              )
-                            }
-                          }
-                        }
-                        onLogoutFinished={() => alert("logout.")}/>
+            const infoRequest = new GraphRequest(
+              '/me',
+              {
+                accessToken: accessToken,
+                parameters: {
+                  fields: {
+                    string: 'email,name,first_name,middle_name,last_name'
+                  }
+                }
+              },
+              responseInfoCallback
+            );
 
+            // Start the graph request.
+            new GraphRequestManager().addRequest(infoRequest).start();
+            })
+          }
+        }
+      }
+        onLogoutFinished={() => ToastAndroid.show('Logout successful', ToastAndroid.SHORT)}/>
 
-                </TouchableOpacity>
-                 <GoogleSigninButton style={styles.textgoogleLoginViewStyle} color={GoogleSigninButton.Color.Light}  onPress={() => { this._signIn(); }}/>
-                 </View>
+        </TouchableOpacity>
+         <GoogleSigninButton style={styles.textgoogleLoginViewStyle} color={GoogleSigninButton.Color.Light}  onPress={() => { this._signIn(); }}/>
+         </View>
 
-                 </Image>
+         </Image>
 
-            </View>
+    </View>
 
         );
     }

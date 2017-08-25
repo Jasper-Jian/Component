@@ -8,7 +8,8 @@ import{
     Platform,
     TouchableOpacity,
     Navigator,
-    Image
+    Image,
+    ToastAndroid,
 } from 'react-native';
 import Mine from './BTMine';
 import Admin from './Admin';
@@ -19,7 +20,6 @@ var width = Dimensions.get('window').width;
 export default class Register extends Component{
   constructor(props) {
       super(props);
-
       this.state={
         email:'',
         password:'',
@@ -29,13 +29,26 @@ export default class Register extends Component{
   }
   _register(){
     if(this.state.password == this.state.verifyPassword){
-      firebaseRef.auth().createUserWithEmailAndPassword(this.state.email,this.state.password).catch(function(error){
-        console.log(error.code);
-        console.log(error.message);
+      firebaseRef.auth().createUserWithEmailAndPassword(this.state.email,this.state.password).then(function(result) {
+          //Register success and redirect to the mine page
+          ToastAndroid.show('Registered', ToastAndroid.SHORT);
+          
+        })
+      .catch(function(error){
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        if (errorCode === 'auth/wrong-password') {
+          ToastAndroid.show('Wrong password', ToastAndroid.SHORT);
+        } else {
+          ToastAndroid.show(errorMessage, ToastAndroid.SHORT);
+        }
+        console.log(error);
       })
     }else{
-      console.console.log("Passwords did not match");
+      ToastAndroid.show('Passwords did not match', ToastAndroid.SHORT);
     }
+
   }
     render(){
     return (
