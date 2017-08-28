@@ -14,7 +14,7 @@ import {
 import Mainstyles from '../StylesSheet';
 import Event from '../Event/BTEventDetail';
 var {width}=Dimensions.get('window').width;
-var DEFAULT_URL = 'https://www.iticket.co.nz/events/2017/may/the-faustus-project';
+var DEFAULT_URL = 'https://www.iticket.co.nz/events/2017/aug/danny-and-the-deep-blue-sea';
 
 export default class description extends Component {
 

@@ -13,6 +13,7 @@ import {
   TextInput,
 } from 'react-native';
 import comment from '../Event/comment';
+import BookingSite from '../Event/BookingSite';
 export default class review extends Component{
   pushToComment() {
     this.props.navigator.push(
@@ -22,6 +23,14 @@ export default class review extends Component{
          }
     );
  }
+ pushToBooking() {
+   this.props.navigator.push(
+        {
+            component: BookingSite,//Navigate page
+            title: 'comment'
+        }
+   );
+}
 
   render(){
     return(
@@ -66,7 +75,7 @@ export default class review extends Component{
       PRICE: $16 - $20{'\n'}{'\n'}
       </Text>
       </View>
-      <TouchableOpacity onPress={() => {Linking.openURL(DEFAULT_URL)}}>
+      <TouchableOpacity onPress={() =>  {this.pushToBooking()}}>
         <View style={styles.textLoginViewStyle}>
             <Text style={styles.ButtonText}>Book Now</Text>
         </View>

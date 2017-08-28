@@ -19,7 +19,7 @@ import styles from '../StylesSheet';
 import Bar from '../More/Bar';
 import Event from '../Event/BTEvent';
 import EventDetail from '../Event/BTEventDetail';
-
+import BookingSite from '../Event/BookingSite';
 var ImageData = require('../ImageData.json');
 var TimerMixin = require('react-timer-mixin');//import timer
 
@@ -231,11 +231,12 @@ export default class Home extends Component{
      );
   }
   pushToBooking(){
-    var url = 'https://www.iticket.co.nz/events/2017/may/the-faustus-project';
-     Linking.openURL(url)
-     .catch((err)=>{
-       console.log('An error occurred', err);
-     });
+    this.props.navigator.push(
+         {
+             component: BookingSite,//Navigate page
+             title: 'BookingSite'
+         }
+    );
   }
 
 
