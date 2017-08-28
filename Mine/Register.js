@@ -15,6 +15,7 @@ import Mine from './BTMine';
 import Admin from './Admin';
 import {firebaseRef} from '../services/firebase';
 import {Action} from 'react-native-router-flux';
+
 var Dimensions = require('Dimensions');
 var width = Dimensions.get('window').width;
 export default class Register extends Component{
