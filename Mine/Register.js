@@ -14,7 +14,7 @@ import{
 import Mine from './BTMine';
 import Admin from './Admin';
 import {firebaseRef} from '../services/firebase';
-
+import {Action} from 'react-native-router-flux';
 var Dimensions = require('Dimensions');
 var width = Dimensions.get('window').width;
 export default class Register extends Component{
@@ -32,7 +32,7 @@ export default class Register extends Component{
       firebaseRef.auth().createUserWithEmailAndPassword(this.state.email,this.state.password).then(function(result) {
           //Register success and redirect to the mine page
           ToastAndroid.show('Registered', ToastAndroid.SHORT);
-          
+          Actions.Register(PARAMS);
         })
       .catch(function(error){
         // Handle Errors here.

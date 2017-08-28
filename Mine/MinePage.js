@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
@@ -9,23 +9,50 @@ import {
   Platform,
   TouchableOpacity,
   Navigator,
-  Dimensions
+  WebView,
+  ToastAndroid
 } from 'react-native';
-var width = Dimensions.get('window').width;
+import {LoginManager, LoginButton, AccessToken,FBAccessToken} from 'react-native-fbsdk';
 import {GoogleSignin, GoogleSigninButton} from 'react-native-google-signin';
+import {firebaseRef} from '../services/firebase';
+import firebase from 'firebase';
+//get screen info
+var Dimensions = require('Dimensions');
+var width = Dimensions.get('window').width;
+
+import {Actions} from "react-native-router-flux";
+
 export default class MinePage extends Component{
+//google signout
+  _signOut() {
+    GoogleSignin.revokeAccess().then(() => GoogleSignin.signOut()).then(() => {
+      firebase.auth().signOut().then(function() {
+      // Sign-out successful.
+      ToastAndroid.show('Sign-out successful', ToastAndroid.SHORT);
+      }, function(error) {
+      // An error happened.
+      });
+      this.setState({user: null});
+    })
+    .done();
+  }
   render() {
       return (
-      <View style={styles.container}>
-        <Text style={{fontSize: 18, fontWeight: 'bold', marginBottom: 20}}>Welcome {this.state.user.name}</Text>
-        <Text>Your email is: {this.state.user.email}</Text>
-
-        <TouchableOpacity onPress={() => {this._signOut(); }}>
-          <View style={{marginTop: 50}}>
-            <Text>Log out</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
+        <View style={styles.container}>
+          <Text style={{fontSize: 18, fontWeight: 'bold', marginBottom: 20}}>Welcome {this.state.user.name}</Text>
+          <Text>Your email is: {this.state.user.email}</Text>
+          <TouchableOpacity onPress={() => {this._signOut(); }}>
+            <View style={styles.LogoutViewStyle}>
+              <Text style={styles.textLoginStyle}>Log out</Text>
+            </View>
+          </TouchableOpacity>
+          <WebView
+            startInLoadingState={true}
+            contentInset={{top:20,left:10,right:10}}
+            scalesPageToFit ={false}
+            source={{uri: 'https://docs.google.com/forms/d/1QypBHmk8ktWXmobJ1HTF3JyiduykRsMVmm96kqVT_O0/viewform?edit_requested=true'}}
+          />
+        </View>
     );
   }
 }

@@ -31,7 +31,7 @@ var width = Dimensions.get('window').width;
 /*import external component*/
 import Register from './Register';
 import Admin from './Admin';
-
+import MyPage from './MinePage';
 export default class Mine extends Component{
   constructor(props) {
     super(props);
@@ -44,23 +44,51 @@ export default class Mine extends Component{
     this._login = this._login.bind(this);
 
   }
-  _login(){
-    firebaseRef.auth().signInWithEmailAndPassword(this.state.email,this.state.password).catch(function(error){
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      if (errorCode === 'auth/wrong-password') {
-        ToastAndroid.show('Wrong password', ToastAndroid.SHORT);
-      } else {
-        ToastAndroid.show(errorMessage, ToastAndroid.SHORT);
-      }
-      console.log(error);
-    })
+  _ResetPassword(){
+    firebase.auth().sendPasswordResetEmail(this.state.email)
+        .then(function() {
+          // Password reset email sent.
+          alert('Email Sent, Please Check you mailbox');
+        })
+        .catch(function(error) {
+          var errorMessage = error.message;
+          ToastAndroid.show(errorMessage, ToastAndroid.SHORT);
+        });
   }
-
   componentDidMount() {
     this._setupGoogleSignin();
+
   }
+  //email login
+  async _login(){
+    try{
+    await firebaseRef.auth().signInWithEmailAndPassword(this.state.email,this.state.password).then(function(user) {
+          //Login success
+          ToastAndroid.show('Logined', ToastAndroid.SHORT);
+
+      }).catch(function(error){
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        if (errorCode === 'auth/user-not-found') {
+            ToastAndroid.show('Email does not registered', ToastAndroid.SHORT);
+        }
+        if (errorCode === 'auth/invalid-email') {
+            ToastAndroid.show('Please enter a valid email', ToastAndroid.SHORT);
+        }
+        else {
+          ToastAndroid.show(errorMessage, ToastAndroid.SHORT);
+        }
+        console.log(error);
+      });
+      const user = await firebaseRef.auth().currentUser;
+        console.log(user);
+        this.setState({user});
+      }
+      catch(err) {
+          console.log("error", err.code, err.message);
+        }
+    }
 
   async _setupGoogleSignin() {
     try {
@@ -78,24 +106,36 @@ export default class Mine extends Component{
       console.log("Play services error", err.code, err.message);
     }
   }
-
+//google signout
   _signOut() {
-    GoogleSignin.revokeAccess().then(() => GoogleSignin.signOut()).then(() => {
-      firebase.auth().signOut().then(function() {
-      // Sign-out successful.
-      ToastAndroid.show('Sign-out successful', ToastAndroid.SHORT);
-      }, function(error) {
-      // An error happened.
-      });
-      this.setState({user: null});
-    })
-    .done();
-  }
+    if(GoogleSignin.currentUser().user!=null){
+      GoogleSignin.revokeAccess().then(() => GoogleSignin.signOut()).then(() => {
+        firebase.auth().signOut().then(function() {
+        // Sign-out successful.
+        ToastAndroid.show('Sign-out successful', ToastAndroid.SHORT);
+        }, function(error) {
+        // An error happened.
+        });
+      })
+      .done();
 
+    }else if (firebase.auth().currentUser!=null){
+      firebase.auth().signOut().then(function() {
+        // Sign-out successful.
+        ToastAndroid.show('Sign-out successful', ToastAndroid.SHORT);
+        }, function(error) {
+        // An error happened.
+        });
+
+    }
+    this.setState({user: null});
+
+
+  }
+//google login
   _signIn() {
     GoogleSignin.signIn().then((user) => {
-
-      const credential = firebase.auth.GoogleAuthProvider.credential(user);
+      credential = firebase.auth.GoogleAuthProvider.credential(user);
       firebase.auth().signInWithCredential(credential).catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
@@ -113,6 +153,7 @@ export default class Mine extends Component{
       })
       .done();
     }
+    //facebook login
   _fbAuth() {
       LoginManager.logInWithReadPermissions(['public_profile','email']).then(function (result) {
           if (result.isCancelled) {
@@ -122,6 +163,7 @@ export default class Mine extends Component{
               const credential = firebase.auth.FacebookAuthProvider.credential(accessTokenData.accessToken);
               firebase.auth().signInWithCredential(credential).then((result)=>{
                 //promise was successful
+                
               },(error)=>{
                 //promis was rejected
                 console.log(console.error());
@@ -135,7 +177,7 @@ export default class Mine extends Component{
               console.log('An error occured:' + error);
           });
   }
-  //Goto Register
+  //Goto Register page
   _ToRegister() {
       this.props.navigator.push(
           {
@@ -150,7 +192,8 @@ export default class Mine extends Component{
         return (
             <View style={styles.container}>
               <Image source={{uri: 'https://basement-theatre.squarespace.com/assets/images/logo-expanded.png'}} style={styles.itemStyle}>
-                {/*use View to make username txt box*/}
+
+              {/*use View to make username txt box*/}
                 <View style={styles.LoginBox}>
                 <View style={styles.textInputViewStyle}>
                     <TextInput
@@ -174,9 +217,14 @@ export default class Mine extends Component{
                         textAlign='center'
                         //invisibility of password
                         secureTextEntry={true}
-                      onChangeText={(text) => this.setState({email: text})}/>
+                      onChangeText={(text) => this.setState({password: text})}/>
                 </View>
+                <TouchableOpacity onPress={() => {this._ResetPassword(); }}>
+                 <View>
+                     <Text>Forgot Password?</Text>
+                 </View>
 
+               </TouchableOpacity>
                 {/*clickable button*/}
                 <TouchableOpacity onPress={this._login}>
                     {/*login button*/}
@@ -240,11 +288,8 @@ export default class Mine extends Component{
         </TouchableOpacity>
          <GoogleSigninButton style={styles.textgoogleLoginViewStyle} color={GoogleSigninButton.Color.Light}  onPress={() => { this._signIn(); }}/>
          </View>
-
          </Image>
-
     </View>
-
         );
     }
     if (this.state.user) {
@@ -266,6 +311,25 @@ export default class Mine extends Component{
          </View>
        );
      }
+     if (this.state.status) {
+        return (
+          <View style={styles.container}>
+            <Text style={{fontSize: 18, fontWeight: 'bold', marginBottom: 20}}>Welcome {this.state.email}</Text>
+            <Text>Your password is: {this.state.password}</Text>
+            <TouchableOpacity onPress={() => {this._signOut(); }}>
+              <View style={styles.LogoutViewStyle}>
+                <Text style={styles.textLoginStyle}>Log out</Text>
+              </View>
+            </TouchableOpacity>
+            <WebView
+              startInLoadingState={true}
+              contentInset={{top:20,left:10,right:10}}
+              scalesPageToFit ={false}
+              source={{uri: 'https://docs.google.com/forms/d/1QypBHmk8ktWXmobJ1HTF3JyiduykRsMVmm96kqVT_O0/viewform?edit_requested=true'}}
+            />
+          </View>
+        );
+      }
   }
 }
 
