@@ -21,7 +21,10 @@ export default class Event extends Component{
 
     return(
       <Navigator
-          initialRoute = {{name: defaultName, component: defaultComponent}}
+          initialRoute = {{
+            name: defaultName,
+            component: defaultComponent,
+          }}
           configureScene = {(route) => {
             return Navigator.SceneConfigs.FloatFromRight;}}
           renderScene = {(route, navigator) =>{

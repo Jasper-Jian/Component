@@ -20,6 +20,13 @@ import review from '../Event/review';
 var {width}=Dimensions.get('window').width;
 var DEFAULT_URL = 'https://www.iticket.co.nz/events/2017/may/the-faustus-project';
 export default class EventDetails extends Component{
+  constructor(props){
+    super(props);
+  }
+  componentDidMount(){
+
+
+  }
   clickJump(){
     const{navigator} = this.props;
     if(navigator){
@@ -38,11 +45,17 @@ export default class EventDetails extends Component{
                 style={styles.backButton}
           />
         </TouchableOpacity>
-        <Text style={styles.headText}>Event</Text>
+        <Text style={styles.headText}>{this.props.data.title}</Text>
         </View>
-        <Image key={1} source={{uri: 'https://static1.squarespace.com/static/5535bce1e4b071a2f7e12732/55a85f73e4b0a37bc13840e6/58b52eade4fcb5991e72c16e/1488268974401/TASSEL1200.JPG'}} style={Mainstyles.itemStyle}/>
+        <Image key={1} source={{uri:this.props.data.images}} style={Mainstyles.itemStyle}/>
       <Navigator
-          initialRoute = {{name: defaultName, component: defaultComponent}}
+          initialRoute = {{
+            name: defaultName,
+            component: defaultComponent,
+            params: {
+                data: this.props.data,
+            }
+          }}
           configureScene = {(route) => {
             return Navigator.SceneConfigs.FloatFromRight;}}
           renderScene = {(route, navigator) =>{

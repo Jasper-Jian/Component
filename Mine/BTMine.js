@@ -20,14 +20,9 @@ import firebase from 'firebase';
 var Dimensions = require('Dimensions');
 var width = Dimensions.get('window').width;
 //https://www.youtube.com/watch?v=7lEU1UEw3YI&t=765s storing data in the database
-// 改setstate里面的user 值
-//
-// or 把user 值 代入 到 其他data里面在login 那里
-//
-// 然后在logout 的时候把其他的state 清 0
-//
-// 在login的时候把user值设置一下不为空就好了 然后整合一起
-
+//https://medium.com/the-many/adding-login-and-authentication-sections-to-your-react-or-react-native-app-7767fd251bd1
+//fblogin
+//https://invertase.io/react-native-firebase/#/modules/authentication?id=auth
 /*import external component*/
 import Register from './Register';
 import Admin from './Admin';
@@ -38,10 +33,10 @@ export default class Mine extends Component{
     this.state={
       email:'',
       password:'',
-      status:'',
       user: null
     }
     this._login = this._login.bind(this);
+    this._fbAuth=this._fbAuth.bind(this);
 
   }
   _ResetPassword(){
@@ -154,7 +149,8 @@ export default class Mine extends Component{
       .done();
     }
     //facebook login
-  _fbAuth() {
+  async _fbAuth() {
+    try{
       LoginManager.logInWithReadPermissions(['public_profile','email']).then(function (result) {
           if (result.isCancelled) {
               ToastAndroid.show('Login cancelled', ToastAndroid.SHORT);
@@ -163,19 +159,34 @@ export default class Mine extends Component{
               const credential = firebase.auth.FacebookAuthProvider.credential(accessTokenData.accessToken);
               firebase.auth().signInWithCredential(credential).then((result)=>{
                 //promise was successful
-                
+
               },(error)=>{
                 //promis was rejected
                 console.log(console.error());
               })
+
             },(error =>{
               console.log('Some erroe occured: '+error);
             }))
+
           }
+
       },
           function (error) {
               console.log('An error occured:' + error);
           });
+
+          const user =  await AccessToken.getCurrentAccessToken().accessToken;
+          console.log(user);
+          this.setState({user: user});
+
+    }
+    catch(err) {
+        console.log("error", err.code, err.message);
+      }
+
+
+
   }
   //Goto Register page
   _ToRegister() {
@@ -263,22 +274,6 @@ export default class Mine extends Component{
                 alert('Success fetching data: ' + result.toString());
               }
             }
-
-            const infoRequest = new GraphRequest(
-              '/me',
-              {
-                accessToken: accessToken,
-                parameters: {
-                  fields: {
-                    string: 'email,name,first_name,middle_name,last_name'
-                  }
-                }
-              },
-              responseInfoCallback
-            );
-
-            // Start the graph request.
-            new GraphRequestManager().addRequest(infoRequest).start();
             })
           }
         }

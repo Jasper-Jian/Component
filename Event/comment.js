@@ -16,6 +16,7 @@ import {
 
 import StarRatingBar from 'react-native-star-rating-view/StarRatingBar'
 import StarRatingView from 'react-native-star-rating-view'
+
 import review from '../Event/review';
 // 该页面所需参数（可选）
 const propTypes={
