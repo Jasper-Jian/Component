@@ -34,17 +34,18 @@ const StylesSheet = StyleSheet.create({
     width: Dimensions.get('window').width,
     backgroundColor: 'rgba(0,0,0,1)',
     alignItems:'center',
-    paddingBottom:50
+    paddingBottom:50,
   },
   TitleText:{
-    fontSize:24,
+    fontSize:20,
     color:'black',
-    fontWeight:'800',
+    fontWeight:'500',
+    marginRight:120,
   },
   MoreInfoText:{
     marginTop:5,
     color:'white',
-    fontWeight:'400',
+    fontWeight:'300',
     fontSize: 20,
     alignSelf: 'center',
     justifyContent: 'center',
@@ -75,6 +76,7 @@ const StylesSheet = StyleSheet.create({
     marginRight:25,
     borderStyle:'solid',
     borderBottomWidth:1,
+    width: Dimensions.get('window').width,
     borderBottomColor : 'rgba(1,165,175,1)',
   },
   TimeText:{

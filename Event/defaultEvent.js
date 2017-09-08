@@ -42,10 +42,6 @@ export default class defaultEvent extends Component{
         });
       })
     }
-  //http://www.jianshu.com/p/22de6734d858?utm_campaign=maleskine&utm_content=note&utm_medium=pc_all_hots&utm_source=recommendation
-  //
-  //data reading firebase
-  //https://invertase.io/react-native-firebase/#/modules/database?id=reading-data
 
   _pressRow(data){
     let _this = this;
@@ -74,7 +70,7 @@ export default class defaultEvent extends Component{
                   </Text>
                   <View style={styles.Divider}></View>
                   <Text style={styles.EventTimeText}>
-                   {data.data.date},   {data.data.time}
+                   {data.data.date}, {data.data.time}
                    </Text>
                    <View style={styles.Divider}></View>
                  </View>
@@ -134,6 +130,8 @@ export default class defaultEvent extends Component{
           </Text>
 
            <ListView
+             pageSize={4}
+             initialListSize={20}
              dataSource={this.state.dataSource}
              renderRow={this._renderRow.bind(this)}
            />
@@ -156,7 +154,7 @@ const styles = StyleSheet.create({
       paddingTop: 0,
       height: 48,
       backgroundColor: '#C0CCD9',
-      alignItems: 'center',
+
 
   },
   headText: {
@@ -174,12 +172,13 @@ const styles = StyleSheet.create({
   },
   EventImageBox:{
     flexDirection:'row',
-    margin:5,
+    margin:3,
     backgroundColor:'#C0CCD9',
   },
   EventImageItem:{
    height:110,
-   margin:2,
+   padding:10,
+   marginRight:5,
    resizeMode:'cover',
    width:Dimensions.get('window').width/3,
   },
@@ -190,7 +189,7 @@ const styles = StyleSheet.create({
     borderBottomColor : 'black',
   },
   ComingSoonText:{
-    fontSize:26,
+    fontSize:20,
     color:'white',
     paddingTop:5,
     paddingBottom:5,

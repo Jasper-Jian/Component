@@ -84,15 +84,14 @@ const styles = StyleSheet.create({
   headerBarContainer: {
       flexDirection: 'row',
       paddingLeft: 10,
-      paddingRight: 10,
-      paddingTop: 0,
-      height: 48,
+      paddingRight: 50,
+      paddingTop: 0,      
       backgroundColor: '#C0CCD9',
       alignItems: 'center',
   },
   headText: {
     paddingTop: 0,
-    paddingLeft: 85,
+    paddingLeft: 15,
     color:'black',
     fontSize:24,
     fontWeight:'bold',

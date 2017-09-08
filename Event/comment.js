@@ -39,9 +39,11 @@ export default class comment extends Component {
     };
 
     clickJump(){
-      this.props.navigator.pop();
+      const{navigator} = this.props;
+      if(navigator){
+        navigator.pop();
+      }
     }
-
     constructor(props) {
         super(props);
         this.textHeightMax = 80;

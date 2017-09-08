@@ -10,22 +10,64 @@ import {
   ScrollView,
   TouchableOpacity,
   Navigator,
+  ListView,
   TextInput,
 } from 'react-native';
 import comment from '../Event/comment';
 import BookingSite from '../Event/BookingSite';
+
+import {firebaseRef} from '../services/firebase';
+import firebase from 'firebase';
+
 export default class review extends Component{
   constructor(props){
     super(props);
+    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    items=[];
+    this.state = {
+        dataSource: ds,
+        loaded:false,
+      };
+  }
+  componentWillMount() {
+    var path = "2017/Comment/"+this.props.data.title;
+    var query = firebase.database().ref(path);
+      query.on('value',(snap)=>{
+        snap.forEach((data)=>{
+          items.push({
+            key:data.key,
+            data:data.val(),
+          });
+        });
+          this.setState({
+            dataSource:this.state.dataSource.cloneWithRows(items),
+            loaded:true
+        });
+      })
   }
   pushToComment() {
+
     this.props.navigator.push(
          {
              component: comment,//Navigate page
              title: 'comment'
          }
     );
- }
+  }
+  _renderRow(data){
+
+      return (
+        <View style={styles.DetailBox}>
+          <Text style={styles.titleText}>
+            sender: {data.data.sender}
+            score: {data.data.score}
+            content：{data.data.content}
+          </Text>
+         </View>
+
+        );
+  }
+
  pushToBooking(data){
    let _this = this;
      const { navigator } = this.props;
@@ -43,6 +85,15 @@ export default class review extends Component{
 
 
   render(){
+    if(!this.state.loaded){
+      return (
+        <View style={styles.DetailBox}>
+          <Text style={styles.titleText}>
+            {'\n'}Loading Detials...{'\n'}
+          </Text>
+         </View>
+      );
+    }else{
     return(
       <View style={styles.container}>
       <ScrollView>
@@ -110,7 +161,10 @@ export default class review extends Component{
           <Text style={styles.ButtonText}>Write Comment</Text>
       </View>
     </TouchableOpacity>
-
+    <ListView
+      dataSource={this.state.dataSource}
+      renderRow={this._renderRow.bind(this)}
+    />
     </View>
   </ScrollableTabView>
   </ScrollView>
@@ -118,6 +172,7 @@ export default class review extends Component{
 
       </View>
     )
+    }
   }
 
 
