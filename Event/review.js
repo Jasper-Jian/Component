@@ -26,14 +26,21 @@ export default class review extends Component{
          }
     );
  }
- pushToBooking() {
-   this.props.navigator.push(
-        {
-            component: BookingSite,//Navigate page
-            title: 'comment'
-        }
-   );
-}
+ pushToBooking(data){
+   let _this = this;
+     const { navigator } = this.props;
+     if(navigator) {
+       console.log(this.props.data.title);
+       navigator.push({
+         title: this.props.data.title,
+         component: BookingSite,
+           params: {
+               data: this.props.data,
+           }
+         });
+     }
+ }
+
 
   render(){
     return(
@@ -73,7 +80,7 @@ export default class review extends Component{
       PRICE: {this.props.data.price}{'\n'}{'\n'}
       </Text>
       </View>
-      <TouchableOpacity onPress={() =>  {this.pushToBooking()}}>
+      <TouchableOpacity onPress={()=>this.pushToBooking(this.props.data)}>
         <View style={styles.textLoginViewStyle}>
             <Text style={styles.ButtonText}>Book Now</Text>
         </View>
