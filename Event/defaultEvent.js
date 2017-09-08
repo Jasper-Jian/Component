@@ -14,6 +14,7 @@ import Mainstyles from '../StylesSheet';
 import EventDetails from '../Event/BTEventDetail';
 var {width}=Dimensions.get('window').width;
 var query = firebase.database().ref("2017/March");
+var query = firebase.database().ref("2017/HomePage");
 import {firebaseRef} from '../services/firebase';
 import firebase from 'firebase';
 export default class defaultEvent extends Component{

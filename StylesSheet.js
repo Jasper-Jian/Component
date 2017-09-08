@@ -31,10 +31,10 @@ const StylesSheet = StyleSheet.create({
   },
   TitleStyle:{
     bottom:25,
-    height: 1100,
     width: Dimensions.get('window').width,
     backgroundColor: 'rgba(0,0,0,1)',
     alignItems:'center',
+    paddingBottom:50
   },
   TitleText:{
     fontSize:24,

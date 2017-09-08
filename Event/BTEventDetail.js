@@ -22,6 +22,8 @@ var DEFAULT_URL = 'https://www.iticket.co.nz/events/2017/may/the-faustus-project
 export default class EventDetails extends Component{
   constructor(props){
     super(props);
+    console.log(this.props.data);
+    console.log(this.props.data.title);
   }
   componentDidMount(){
 

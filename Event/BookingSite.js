@@ -14,6 +14,11 @@ import {
 } from 'react-native';
 
 export default class BookingSite extends Component {
+  constructor(props){
+    super(props);
+    console.log(this.props.data);
+    console.log(this.props.data.title);
+  }
   clickJump(){
     const{navigator} = this.props;
     if(navigator){
@@ -30,12 +35,13 @@ export default class BookingSite extends Component {
               style={styles.backButton}
         />
       </TouchableOpacity>
+      <Text style={styles.headText}>{this.props.data.title}</Text>
       </View>
       <WebView
         startInLoadingState={true}
         contentInset={{top:20,left:10,right:10}}
         scalesPageToFit ={false}
-        source={{uri: 'https://www.iticket.co.nz/events/2017/aug/danny-and-the-deep-blue-sea'}}
+        source={{uri:this.props.data.link}}
       />
       </View>
     );
@@ -52,6 +58,15 @@ const styles = StyleSheet.create({
       width:Dimensions.get('window').width,
       height:200,
       resizeMode: 'stretch'
+    },
+    headText: {
+      paddingTop: 0,
+      paddingLeft: 15,
+      color:'black',
+      fontSize:24,
+      fontWeight:'bold',
+      textAlign :'center',
+
     },
     headerBarContainer: {
         flexDirection: 'row',

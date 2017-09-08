@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 const  window = Dimensions.get('window');
 
-import Home from '../Home/BTHome';
+import Home from '../Home/defaultHome';
 import News from '../More/News';
 import Bar from '../More/Bar';
 import Support from '../More/Support';

@@ -85,11 +85,14 @@ export default class review extends Component{
       </View>
     </View>
 
+    {/* //重构data structure
+    //增加database 到这个js file 并写入
+    //更改用户rule to can be use after login success or decteced */}
 
     <View tabLabel='Review' style={styles.DetailBox}>
     <Text style={styles.titleText}>{'\n'}Rating{'\n'}</Text>
     <StarRatingBar
-    score={2.3}
+    score={this.props.data.score}
     allowsHalfStars={true}
     accurateHalfStars={true}
     />
