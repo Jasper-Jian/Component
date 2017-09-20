@@ -12,12 +12,15 @@ import {
     InteractionManager,
     ScrollView,
     Navigator,
+    ToastAndroid
 } from "react-native";
-
+import {firebaseRef} from '../services/firebase';
+import firebase from 'firebase';
 import StarRatingBar from 'react-native-star-rating-view/StarRatingBar'
 import StarRatingView from 'react-native-star-rating-view'
 
 import review from '../Event/review';
+
 // 该页面所需参数（可选）
 const propTypes={
     // params : React.PropTypes.shape({
@@ -42,6 +45,27 @@ export default class comment extends Component {
       const{navigator} = this.props;
       if(navigator){
         navigator.pop();
+      }
+    }
+    upload(){
+      var path = "2017/Comment/"+this.props.data.title;
+      var query = firebase.database().ref(path);
+      var user = firebaseRef.auth().currentUser;
+      this.setState({user});
+      if(user != null){
+        if(this.state.score != 0){
+          var data={
+            sender: user.email,
+            score:this.state.score,
+            content:this.state.evaluateText
+          }
+          query.push(data);
+          ToastAndroid.show('Upload successful', ToastAndroid.SHORT);
+        }else{
+          ToastAndroid.show('Please select a score', ToastAndroid.SHORT);
+        }        
+      }else{
+        ToastAndroid.show('Please Login First', ToastAndroid.SHORT);
       }
     }
     constructor(props) {
@@ -88,7 +112,7 @@ export default class comment extends Component {
                 </TouchableOpacity>
                 <View style={styles.space}>
                 </View>
-                <TouchableOpacity onPress={() => {this.clickJump.bind(this)}}>
+                <TouchableOpacity onPress={() => {this.upload();}}>
                   <View style={styles.buttonStyle}>
                       <Text style={styles.ButtonText}>Upload</Text>
                   </View>
@@ -120,6 +144,9 @@ export default class comment extends Component {
                     accurateHalfStars={true}
                     onStarValueChanged={(score) => {
                         console.log('new score:' + score);
+                        this.setState({
+                            score: score
+                        });
                     }}
                 />
             </View>

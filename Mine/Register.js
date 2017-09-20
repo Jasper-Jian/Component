@@ -12,7 +12,6 @@ import{
     ToastAndroid,
 } from 'react-native';
 import Mine from './BTMine';
-import Admin from './Admin';
 import {firebaseRef} from '../services/firebase';
 import {Action} from 'react-native-router-flux';
 

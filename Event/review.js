@@ -12,6 +12,8 @@ import {
   Navigator,
   ListView,
   TextInput,
+  RefreshControl,
+  ActivityIndicator
 } from 'react-native';
 import comment from '../Event/comment';
 import BookingSite from '../Event/BookingSite';
@@ -27,6 +29,8 @@ export default class review extends Component{
     this.state = {
         dataSource: ds,
         loaded:false,
+        evaluateText: null,
+        score: 3.7,
       };
   }
   componentWillMount() {
@@ -44,25 +48,42 @@ export default class review extends Component{
             loaded:true
         });
       })
-  }
-  pushToComment() {
 
-    this.props.navigator.push(
-         {
-             component: comment,//Navigate page
-             title: 'comment'
-         }
-    );
   }
+  pushToComment(data) {
+    let _this = this;
+      const { navigator } = this.props;
+      if(navigator) {
+        console.log(this.props.data.title);
+        navigator.push({
+          title: comment,
+          component: comment,
+            params: {
+                data: this.props.data,
+            }
+          });
+      }
+  }
+
   _renderRow(data){
-
       return (
-        <View style={styles.DetailBox}>
-          <Text style={styles.titleText}>
-            sender: {data.data.sender}
-            score: {data.data.score}
-            content：{data.data.content}
+        <View>
+          <View style={styles.space}>
+          </View>
+          <View style={styles.comment}>
+          <Text style={styles.MoreInfoText}>
+            {data.data.content}
           </Text>
+
+              <StarRatingBar
+                score={data.data.score}
+                allowsHalfStars={true}
+                accurateHalfStars={true}
+              />
+              <Text>
+                sender: {data.data.sender}
+              </Text>
+           </View>
          </View>
 
         );
@@ -143,10 +164,6 @@ export default class review extends Component{
       </View>
     </View>
 
-    {/* //重构data structure
-    //增加database 到这个js file 并写入
-    //更改用户rule to can be use after login success or decteced */}
-
     <View tabLabel='Review' style={styles.DetailBox}>
     <Text style={styles.titleText}>{'\n'}Rating{'\n'}</Text>
     <StarRatingBar
@@ -156,7 +173,7 @@ export default class review extends Component{
     />
     <View style={styles.space}>
     </View>
-    <TouchableOpacity onPress={() => {this.pushToComment()}}>
+    <TouchableOpacity onPress={() => {this.pushToComment(this.props.data)}}>
       <View style={styles.textLoginViewStyle}>
           <Text style={styles.ButtonText}>Write Comment</Text>
       </View>
@@ -168,8 +185,6 @@ export default class review extends Component{
     </View>
   </ScrollableTabView>
   </ScrollView>
-
-
       </View>
     )
     }
@@ -236,6 +251,11 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
   },
+  comment:{
+    alignSelf: 'flex-start',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+  },
   ButtonText:{
     marginTop:2,
     color:'white',
@@ -246,7 +266,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   space:{
-    height: 80,
+    height: 40,
     backgroundColor: 'transparent',
   },
 });

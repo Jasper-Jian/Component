@@ -25,7 +25,6 @@ var width = Dimensions.get('window').width;
 //https://invertase.io/react-native-firebase/#/modules/authentication?id=auth
 /*import external component*/
 import Register from './Register';
-import Admin from './Admin';
 import MyPage from './MinePage';
 export default class Mine extends Component{
   constructor(props) {
