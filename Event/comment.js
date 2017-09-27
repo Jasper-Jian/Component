@@ -151,32 +151,26 @@ export default class comment extends Component {
         )
     }
 
-    // 渲染评分(滑动打分、精确到小数)
+    // 渲染评分(滑动打分)
     _renderStarRatingBar3 = () => {
         return (
-            <View style={[styles.starRating, {alignSelf: 'flex-start', alignItems: 'center', height: 40}]}>
-                <View style={{paddingRight: 10, paddingLeft: 10}}>
-                    <Text style={styles.text}>
-                        Slide to rate
-                    </Text>
-                </View>
-                <StarRatingBar
-                    starStyle={{
-                        width: 20,
-                        height: 20,
-                    }}
-                    readOnly={false}
-                    continuous={true}
-                    // score={3.7}
-                    allowsHalfStars={true}
-                    accurateHalfStars={true}
-                    onStarValueChanged={(score) => {
-                        this.setState({
-                            score: score
-                        });
-                    }}
-                />
-            </View>
+          <View style={[styles.starRating, {alignSelf: 'flex-start', alignItems: 'center', height: 40}]}>
+              <View style={{paddingRight: 10, paddingLeft: 10}}>
+                  <Text style={styles.text}>
+                      Slide to rate
+                  </Text>
+              </View>
+              <StarRatingBar
+                  readOnly={false}
+                  continuous={true}
+                  score={5}
+                  onStarValueChanged={(score) => {
+                    this.setState({
+                        score: score
+                    });
+                  }}
+              />
+          </View>
         );
     }
 

@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   container: {
       //set to full screen
       flex: 1,
-      backgroundColor:'rgba(174,221,129,1)',
+      backgroundColor:'#C0CCD9',
   },LoginBox:{
     paddingTop:70,
   },

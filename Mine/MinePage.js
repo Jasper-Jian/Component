@@ -61,7 +61,8 @@ const styles = StyleSheet.create({
         //set to full screen
         flex: 1,
         backgroundColor:'rgba(250,227,98,1)',
-    },LoginBox:{
+    },
+    LoginBox:{
       paddingTop:70,
     },
     textInputViewStyle: {

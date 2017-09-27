@@ -123,19 +123,8 @@ export default class defaultHome extends Component{
     }else{
     const menu=<Menu onItemSelected={this.onMenuItemSelected}/>;
     return (
-      <SideMenu
-               menu={menu}
-               isOpen={this.state.isOpen}
-            onChange={(isOpen)=>this.updateMenuState(isOpen)}
-            menuPosition={'left'}//侧边栏是左边还是右边
-            openMenuOffset={0.8*width}//侧边栏的宽度
-            edgeHitWidth={200}//手指拖动可以打开侧边栏的距离（距离侧边栏）
-      >
       <View style={styles.container}>
       <View style={styles.SearchBarContainer}>
-      <Button onPress={()=>this.toggle()}>
-          <Image source={require('../images/menu.png')} style={styles.button}/>
-      </Button>
 
       <View style={styles.searchBox}>
 
@@ -165,7 +154,7 @@ export default class defaultHome extends Component{
           <Image key={2} source={{uri: 'https://static1.squarespace.com/static/5535bce1e4b071a2f7e12732/55a85f73e4b0a37bc13840e6/58b49d1d17bffc07f1c3cf0e/1488231710603/1200x560+Shoot+the+freak+3.jpg'}}style={styles.itemStyle}/>
           <Image key={3} source={{uri: 'https://static1.squarespace.com/static/5535bce1e4b071a2f7e12732/55a85f73e4b0a37bc13840e6/58b49976e3df283cef4fd3ec/1488230779982/Castles+Basement+1200x560.png'}}style={styles.itemStyle}/>
           <Image key={4} source={{uri: 'https://static1.squarespace.com/static/5535bce1e4b071a2f7e12732/55a85f73e4b0a37bc13840e6/58b4afc9e6f2e15812074d78/1488236490221/Performance+Salon+Week+2_1200.jpg'}}style={styles.itemStyle} />
-          <Image key={5}source={{uri: 'https://static1.squarespace.com/static/5535bce1e4b071a2f7e12732/55a85f73e4b0a37bc13840e6/58b497e4a5790a11a8d14526/1488230372981/1200-560+size+new.jpg'}}style={styles.itemStyle}/>
+          <Image key={5} source={{uri: 'https://static1.squarespace.com/static/5535bce1e4b071a2f7e12732/55a85f73e4b0a37bc13840e6/58b497e4a5790a11a8d14526/1488230372981/1200-560+size+new.jpg'}}style={styles.itemStyle}/>
        </ScrollView>
        <View style={styles.indicatorStyle}>
           {this.renderPageCircle()}
@@ -182,7 +171,6 @@ export default class defaultHome extends Component{
      </ScrollView>
       </View>
 
-      </SideMenu>
     );
   }
   }

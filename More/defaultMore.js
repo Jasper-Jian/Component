@@ -13,6 +13,7 @@ import {
 import News from '../More/News';
 import Bar from '../More/Bar';
 import Support from '../More/Support';
+import Visit from '../More/Visit';
 
 export default class defaultMore extends Component{
   clickJumpToNews(){
@@ -39,6 +40,15 @@ export default class defaultMore extends Component{
         navigator.push({　　
         name: "Support",
         component: Support
+        });
+      }
+  }
+  clickJumpToVisit(){
+      const{navigator} = this.props;
+      if(navigator){
+        navigator.push({　　
+        name: "Visit",
+        component: Visit
         });
       }
   }
@@ -72,19 +82,11 @@ export default class defaultMore extends Component{
       </TouchableOpacity>
       <View style={styles.space}>
       </View>
-      <Image source={require('../images/OurStory_Head_Image.png')}
-            style={styles.headImage}
-      />
-      <View style={styles.space}>
-      </View>
-      <Image source={require('../images/ForArtist_Head_Image.png')}
-            style={styles.headImage}
-      />
-      <View style={styles.space}>
-      </View>
+      <TouchableOpacity onPress = {this.clickJumpToVisit.bind(this)}>
       <Image source={require('../images/Visit_Head_Image.png')}
             style={styles.headImage}
       />
+      </TouchableOpacity>
       <View style={styles.space}>
       </View>
       </ScrollView>
