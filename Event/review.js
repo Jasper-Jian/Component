@@ -68,8 +68,6 @@ export default class review extends Component{
   _renderRow(data){
       return (
         <View>
-          <View style={styles.space}>
-          </View>
           <View style={styles.comment}>
           <Text style={styles.MoreInfoText}>
             {data.data.content}
@@ -77,13 +75,15 @@ export default class review extends Component{
 
               <StarRatingBar
                 score={data.data.score}
-                allowsHalfStars={true}
-                accurateHalfStars={true}
+                allowsHalfStars={false}
+                accurateHalfStars={false}
               />
-              <Text>
-                sender: {data.data.sender}
-              </Text>
-           </View>
+          <Text>
+            sender: {data.data.sender}
+            {'\n'}
+          </Text>
+          </View>
+          <View style={styles.Divider}></View>
          </View>
 
         );
@@ -164,8 +164,9 @@ export default class review extends Component{
       </View>
     </View>
 
-    <View tabLabel='Review' style={styles.DetailBox}>
-    <Text style={styles.titleText}>{'\n'}Rating{'\n'}</Text>
+    <View tabLabel='Review'>
+    <View style={styles.DetailBox}>
+    <Text style={styles.titleText}>{'\n'}Overall Rating{'\n'}</Text>
     <StarRatingBar
     score={this.props.data.score}
     allowsHalfStars={true}
@@ -173,15 +174,20 @@ export default class review extends Component{
     />
     <View style={styles.space}>
     </View>
+    </View>
     <TouchableOpacity onPress={() => {this.pushToComment(this.props.data)}}>
       <View style={styles.textLoginViewStyle}>
           <Text style={styles.ButtonText}>Write Comment</Text>
       </View>
     </TouchableOpacity>
+    <View style={styles.DetailBox}>
+    <Text style={styles.titleText}>{'\n'}User Reviews{'\n'}</Text>
+    <View style={styles.Divider}></View>
     <ListView
       dataSource={this.state.dataSource}
       renderRow={this._renderRow.bind(this)}
     />
+    </View>
     </View>
   </ScrollableTabView>
   </ScrollView>
@@ -225,20 +231,18 @@ const styles = StyleSheet.create({
     justifyContent:'flex-start',
     alignSelf:'flex-start',
     alignItems:'flex-start',
-    paddingLeft: 50,
-    paddingRight: 50,
+    paddingLeft: 30,
+    paddingRight: 30,
   },
   Divider:{
     borderStyle:'solid',
-    borderBottomWidth:3,
-    borderBottomColor : 'white',
+    borderBottomWidth:1,
+    width: Dimensions.get('window').width-60,
+    borderBottomColor : 'rgba(1,165,175,1)',
   },
   MoreInfoText:{
     color:'black',
     fontWeight:'400',
-    alignSelf: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
     fontSize: 16,
     lineHeight: 30,
   },

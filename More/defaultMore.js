@@ -125,6 +125,7 @@ const styles = StyleSheet.create({
     resizeMode: 'stretch',
     alignSelf: 'center',
     paddingTop: 10,
+    borderRadius: 20,
   },
   space:{
     height: 10,
