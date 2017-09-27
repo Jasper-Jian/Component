@@ -36,34 +36,62 @@ const defaultProps = {
 
 export default class comment extends Component {
     static propTypes = propTypes;
+    items=[];
     //static defaultProps = defaultProps;
     static defaultProps = {
       title: 'comment'
     };
+    componentWillMount() {
+      var path = "2017/Comment/"+this.props.data.title;
+      var query = firebase.database().ref(path);
+        query.on('value',(snap)=>{
+          snap.forEach((data)=>{
+            items.push({
+              data:data.val(),
+            });
+          });
+          this.setState({
+            data:items,
+          })
+        })
 
+    }
     clickJump(){
       const{navigator} = this.props;
+
       if(navigator){
         navigator.pop();
       }
     }
     upload(){
       var path = "2017/Comment/"+this.props.data.title;
+      var score = "2017/Comment/"+this.props.data.title;
+      var update_query = firebase.database().ref(score);
       var query = firebase.database().ref(path);
       var user = firebaseRef.auth().currentUser;
       this.setState({user});
       if(user != null){
         if(this.state.score != 0){
+          var total = this.state.score;
+          for(var i = 0; i< this.state.data.length/2;i++){
+             total = total + parseInt(this.state.data[i].data.score);
+          }
+          var average=0;
+          average = total/((this.state.data.length/2)+1);
+              console.log(total);
+              console.log(average);
           var data={
             sender: user.email,
             score:this.state.score,
             content:this.state.evaluateText
           }
+          var rate = {score:average};
           query.push(data);
+          // update_query.push(rate);
           ToastAndroid.show('Upload successful', ToastAndroid.SHORT);
         }else{
           ToastAndroid.show('Please select a score', ToastAndroid.SHORT);
-        }        
+        }
       }else{
         ToastAndroid.show('Please Login First', ToastAndroid.SHORT);
       }
@@ -105,7 +133,7 @@ export default class comment extends Component {
                 {this._renderSeparatorLine()}
 
                 <View style={styles.button}>
-                <TouchableOpacity onPress={() => {this.clickJump.bind(this)}}>
+                <TouchableOpacity onPress={() => {this.clickJump();}}>
                   <View style={styles.buttonStyle}>
                       <Text style={styles.ButtonText}>Cancel</Text>
                   </View>
@@ -139,11 +167,10 @@ export default class comment extends Component {
                     }}
                     readOnly={false}
                     continuous={true}
-                    score={3.7}
+                    // score={3.7}
                     allowsHalfStars={true}
                     accurateHalfStars={true}
                     onStarValueChanged={(score) => {
-                        console.log('new score:' + score);
                         this.setState({
                             score: score
                         });
