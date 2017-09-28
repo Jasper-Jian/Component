@@ -35,6 +35,7 @@ export default class defaultHome extends Component{
         super(props);//这一句不能省略，照抄即可
         var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         items=[];
+        imageData=[];
         this.state={
             // selectedTab:'home'
             dataSource: ds,
@@ -69,15 +70,28 @@ export default class defaultHome extends Component{
           });
             this.setState({
               dataSource:this.state.dataSource.cloneWithRows(items),
-              loaded:true
+              // loaded:true,
           });
         })
+        var image_query = firebase.database().ref("2017/showCase");
+          image_query.on('value',(snap)=>{
+            snap.forEach((image)=>{
+              imageData.push({
+                key:image.key,
+                image:image.val(),
+              });
+            });
+            this.setState({
+              image:imageData,
+              loaded:true,
+            })
+          })
+
       }
       _pressRow(data){
         let _this = this;
           const { navigator } = this.props;
           if(navigator) {
-            console.log(data.data.title);
             navigator.push({
               title: data.data.title,
               component: EventDetails,
@@ -86,6 +100,8 @@ export default class defaultHome extends Component{
                 }
               });
           }
+          console.log(this.state.image[0].image.imagelink);
+          console.log(imageData[0].image.imagelink);
       }
       _renderRow(data){
           return (
@@ -125,7 +141,8 @@ export default class defaultHome extends Component{
     const menu=<Menu onItemSelected={this.onMenuItemSelected}/>;
     return (
       <View style={styles.container}>
-      <View style={styles.SearchBarContainer}>
+        {/*===============SEARCH BAR =================== */}
+      {/* <View style={styles.SearchBarContainer}>
 
       <View style={styles.searchBox}>
 
@@ -140,7 +157,7 @@ export default class defaultHome extends Component{
       </View>
       <Image source={require('../images/BTLogo.png')} style={styles.sideMenu}/>
 
-        </View>
+        </View> */}
 
         <ScrollView>
         <ScrollableTabView
@@ -154,10 +171,16 @@ export default class defaultHome extends Component{
           tabBarTextStyle={{fontSize: 12}}
         >
         <View tabLabel='01'>
-        <Image key={1} source={{uri: 'https://static1.squarespace.com/static/5535bce1e4b071a2f7e12732/55a85f73e4b0a37bc13840e6/58b52eade4fcb5991e72c16e/1488268974401/TASSEL1200.JPG'}} style={styles.itemStyle}/>
+        {/* <TouchableOpacity onPress={console.log(this.state.dataSource)}> */}
+        <Image key={1} source={{uri:this.state.image[0].image.imagelink}} style={styles.itemStyle}/>
+        {/* </TouchableOpacity> */}
         </View>
-        <View tabLabel='02'></View>
-        <View tabLabel='03'></View>
+        <View tabLabel='02'>
+        <Image key={2} source={{uri:this.state.image[1].image.imagelink}} style={styles.itemStyle}/>
+        </View>
+        <View tabLabel='03'>
+        <Image key={3} source={{uri:this.state.image[2].image.imagelink}} style={styles.itemStyle}/>
+        </View>
         </ScrollableTabView>
 
       <View style={styles.TitleStyle}>
