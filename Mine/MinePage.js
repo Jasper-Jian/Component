@@ -16,6 +16,7 @@ import {LoginManager, LoginButton, AccessToken,FBAccessToken} from 'react-native
 import {GoogleSignin, GoogleSigninButton} from 'react-native-google-signin';
 import {firebaseRef} from '../services/firebase';
 import firebase from 'firebase';
+import FillingForm from './FillingForm'
 //get screen info
 var Dimensions = require('Dimensions');
 var width = Dimensions.get('window').width;
@@ -46,12 +47,14 @@ export default class MinePage extends Component{
               <Text style={styles.textLoginStyle}>Log out</Text>
             </View>
           </TouchableOpacity>
-          <WebView
-            startInLoadingState={true}
-            contentInset={{top:20,left:10,right:10}}
-            scalesPageToFit ={false}
-            source={{uri: 'https://docs.google.com/forms/d/1QypBHmk8ktWXmobJ1HTF3JyiduykRsMVmm96kqVT_O0/viewform?edit_requested=true'}}
-          />
+         {/*clickable button*/}
+         <TouchableOpacity onPress={this._login}>
+             {/*login button*/}
+             <View style={styles.textLoginViewStyle}>
+                 <Text style={styles.textLoginStyle}>Login</Text>
+             </View>
+         </TouchableOpacity>
+
         </View>
     );
   }

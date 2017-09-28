@@ -26,6 +26,7 @@ var width = Dimensions.get('window').width;
 /*import external component*/
 import Register from './Register';
 import MyPage from './MinePage';
+import FillingForm from './FillingForm'
 export default class Mine extends Component{
   constructor(props) {
     super(props);
@@ -52,6 +53,14 @@ export default class Mine extends Component{
   componentDidMount() {
     this._setupGoogleSignin();
 
+  }
+  _SubmitPage(){
+        const { navigator } = this.props;
+        if(navigator) {
+          navigator.push({
+            component: FillingForm,
+            });
+        }
   }
   //email login
   async _login(){
@@ -286,44 +295,46 @@ export default class Mine extends Component{
     </View>
         );
     }
-    if (this.state.user) {
+    if (this.state.user||this.state.status) {
        return (
          <View style={styles.container}>
            <Text style={{fontSize: 18, fontWeight: 'bold', marginBottom: 20}}>Welcome {this.state.user.name}</Text>
            <Text>Your email is: {this.state.user.email}</Text>
+
+           <TouchableOpacity onPress={() =>{this._SubmitPage();}}>
+               {/*login button*/}
+               <View style={styles.textLoginViewStyle}>
+                   <Text style={styles.textLoginStyle}>Submition Form</Text>
+               </View>
+           </TouchableOpacity>
+
            <TouchableOpacity onPress={() => {this._signOut(); }}>
              <View style={styles.LogoutViewStyle}>
                <Text style={styles.textLoginStyle}>Log out</Text>
              </View>
            </TouchableOpacity>
-           <WebView
-             startInLoadingState={true}
-             contentInset={{top:20,left:10,right:10}}
-             scalesPageToFit ={false}
-             source={{uri: 'https://docs.google.com/forms/d/1QypBHmk8ktWXmobJ1HTF3JyiduykRsMVmm96kqVT_O0/viewform?edit_requested=true'}}
-           />
          </View>
        );
      }
-     if (this.state.status) {
-        return (
-          <View style={styles.container}>
-            <Text style={{fontSize: 18, fontWeight: 'bold', marginBottom: 20}}>Welcome {this.state.email}</Text>
-            <Text>Your password is: {this.state.password}</Text>
-            <TouchableOpacity onPress={() => {this._signOut(); }}>
-              <View style={styles.LogoutViewStyle}>
-                <Text style={styles.textLoginStyle}>Log out</Text>
-              </View>
-            </TouchableOpacity>
-            <WebView
-              startInLoadingState={true}
-              contentInset={{top:20,left:10,right:10}}
-              scalesPageToFit ={false}
-              source={{uri: 'https://docs.google.com/forms/d/1QypBHmk8ktWXmobJ1HTF3JyiduykRsMVmm96kqVT_O0/viewform?edit_requested=true'}}
-            />
-          </View>
-        );
-      }
+    //  if (this.state.status) {
+    //     return (
+    //       <View style={styles.container}>
+    //         <Text style={{fontSize: 18, fontWeight: 'bold', marginBottom: 20}}>Welcome {this.state.email}</Text>
+    //         <Text>Your password is: {this.state.password}</Text>
+    //         <TouchableOpacity onPress={() => {this._signOut(); }}>
+    //           <View style={styles.LogoutViewStyle}>
+    //             <Text style={styles.textLoginStyle}>Log out</Text>
+    //           </View>
+    //         </TouchableOpacity>
+    //         <WebView
+    //           startInLoadingState={true}
+    //           contentInset={{top:20,left:10,right:10}}
+    //           scalesPageToFit ={false}
+    //           source={{uri: 'https://docs.google.com/forms/d/1QypBHmk8ktWXmobJ1HTF3JyiduykRsMVmm96kqVT_O0/viewform?edit_requested=true'}}
+    //         />
+    //       </View>
+    //     );
+    //   }
   }
 }
 
@@ -386,14 +397,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     LogoutViewStyle:{
-      width: 150,
-      height: 28,
+      width: 200,
+      height: 45,
       backgroundColor: 'rgba(255,0,0,.9)',
       borderRadius: 10,
-      marginTop: 15,
-      marginBottom: 5,
-      alignSelf: 'flex-end',
-      justifyContent: 'flex-end',
+      marginTop: 20,
+      marginRight:60,
+      alignSelf: 'center',
+      justifyContent: 'center',
       alignItems: 'center',
     },
     //"Login" style
