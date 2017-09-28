@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Navigator,
   TextInput,
+  Linking,
 } from 'react-native';
 
 export default class Support extends Component {
@@ -69,6 +70,27 @@ export default class Support extends Component {
           <Text style={styles.bigText}>
           {'\n'}BIG UPS TO THESE RAD ORGANISATIONS FOR THEIR ONGOING SUPPORT!{'\n'}{'\n'}
           </Text>
+          <View style={[styles.Divider,{marginBottom:10}]}></View>
+
+          <Text style={styles.bigText}>
+          Core Parners
+          </Text>
+          <View style={{flexDirection:'row',alignSelf:'center',marginTop:10}}>
+          <TouchableOpacity onPress={ ()=>{ Linking.openURL('http://www.creativenz.govt.nz')}}>
+          <Image source={require('../images/creative-nz.jpg')}
+                  style={[styles.icon, {width: 105, height: 70, marginRight:30}]}/>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={ ()=>{ Linking.openURL('https://foundationnorth.org.nz')}}>
+          <Image source={require('../images/foundation-north.jpg')}
+                  style={[styles.icon, {width: 105, height: 70}]}/>
+          </TouchableOpacity>
+          </View>
+          <TouchableOpacity onPress={ ()=>{ Linking.openURL('https://www.aucklandcouncil.govt.nz')}}>
+          <Image source={require('../images/auckland-council.jpg')}
+                  style={[styles.icon, {width: 105, height: 70,alignSelf:'center'}]}/>
+          </TouchableOpacity>
+
+
         </View>
 
       </ScrollView>
@@ -81,7 +103,7 @@ const styles = StyleSheet.create({
     container: {
         //set to full screen
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: '#F5F5F5',
     },
     headImage: {
       width:Dimensions.get('window').width,
@@ -105,9 +127,9 @@ const styles = StyleSheet.create({
     textBox:{
       flexDirection: 'column',
       paddingTop: 40,
-      paddingLeft: 50,
-      paddingRight: 50,
-      backgroundColor: 'white',
+      paddingLeft: 30,
+      paddingRight: 30,
+      backgroundColor: '#F5F5F5',
     },
     textStyle:{
       fontSize: 16,

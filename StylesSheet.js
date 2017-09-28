@@ -18,6 +18,10 @@ const StylesSheet = StyleSheet.create({
       height:200,
       resizeMode: 'stretch'
   },
+  tabHeading:{
+    height: 200,
+    marginBottom: 10,
+  },
   indicatorStyle:{
     width:Dimensions.get('window').width,
     height:25,
@@ -32,7 +36,7 @@ const StylesSheet = StyleSheet.create({
   TitleStyle:{
     bottom:25,
     width: Dimensions.get('window').width,
-    backgroundColor: '#C0CCD9',
+    backgroundColor: '#F5F5F5',
     alignItems:'center',
     paddingBottom:50,
   },

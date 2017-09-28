@@ -1,6 +1,5 @@
 'use restict'
 import React, { Component } from 'react';
-import ScrollableTabView, {DefaultTabBar, } from 'react-native-scrollable-tab-view';
 import {
   StyleSheet,
   Text,
@@ -143,22 +142,21 @@ export default class defaultHome extends Component{
         </View>
 
         <ScrollView>
-        <ScrollableTabView
-          style={styles.tabHeading}
-          renderTabBar={()=><DefaultTabBar backgroundColor='rgba(255, 255, 255, 0.7)' />}
-          tabBarPosition='overlayBottom'
-          tabBarBackgroundColor='rgba(0, 0, 0, 0.2)'
-          tabBarActiveTextColor='blue'
-          tabBarInactiveTextColor='black'
-          tabBarUnderlineColor='black'
-          tabBarTextStyle={{fontSize: 12}}
+        <ScrollView
+        horizontal={true}   // horizontal allignment
+        showsHorizontalScrollIndicator={false}  // Hide horizontal indicator
+        showsVerticalScrollIndicator={false}    // Hide Vertical indicator
+        pagingEnabled={true}
+        onMomentumScrollEnd={(e)=>this.onAnimationEnd(e)}
         >
-        <View tabLabel='01'>
-        <Image key={1} source={{uri: 'https://static1.squarespace.com/static/5535bce1e4b071a2f7e12732/55a85f73e4b0a37bc13840e6/58b52eade4fcb5991e72c16e/1488268974401/TASSEL1200.JPG'}} style={styles.itemStyle}/>
-        </View>
-        <View tabLabel='02'></View>
-        <View tabLabel='03'></View>
-        </ScrollableTabView>
+          {/* {this.renderItem() } */}
+          <Image key={1} source={{uri: 'https://static1.squarespace.com/static/5535bce1e4b071a2f7e12732/55a85f73e4b0a37bc13840e6/58b52eade4fcb5991e72c16e/1488268974401/TASSEL1200.JPG'}} style={styles.itemStyle}/>
+          <Image key={2} source={{uri: 'https://static1.squarespace.com/static/5535bce1e4b071a2f7e12732/55a85f73e4b0a37bc13840e6/58b49d1d17bffc07f1c3cf0e/1488231710603/1200x560+Shoot+the+freak+3.jpg'}}style={styles.itemStyle}/>
+          <Image key={3} source={{uri: 'https://static1.squarespace.com/static/5535bce1e4b071a2f7e12732/55a85f73e4b0a37bc13840e6/58b49976e3df283cef4fd3ec/1488230779982/Castles+Basement+1200x560.png'}}style={styles.itemStyle}/>
+          </ScrollView>
+       <View style={styles.indicatorStyle}>
+          {this.renderPageCircle()}
+       </View>
 
       <View style={styles.TitleStyle}>
           <Text style={styles.TitleText}>WHAT‘S ON</Text>
@@ -168,7 +166,6 @@ export default class defaultHome extends Component{
           />
 
      </View>
-
      </ScrollView>
       </View>
 

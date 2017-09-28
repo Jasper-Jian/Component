@@ -113,6 +113,12 @@ export default class defaultEvent extends Component{
         <View style={styles.headerBarContainer}>
         <Text style={styles.headText}>Event</Text>
         </View>
+        <Image source={require('../images/whats_on_head_image.png')}
+                style={{resizeMode: 'stretch',
+                        width:Dimensions.get('window').width,
+                        height:(Dimensions.get('window').width)/2,
+                        marginBottom:20}}
+          />
           <Text style={styles.ComingSoonText}>
           Coming Soon Event
           </Text>
@@ -123,10 +129,16 @@ export default class defaultEvent extends Component{
       return (
         <View style={styles.container}>
         <View style={styles.headerBarContainer}>
-        <Text style={styles.headText}>Event</Text>
+        <Text style={styles.headText}>What‘s On</Text>
         </View>
-          <Text style={styles.ComingSoonText}>
-          Coming Soon Event
+        <ScrollView>
+        <Image source={require('../images/whats_on_head_image.png')}
+                style={{resizeMode: 'stretch',
+                        width:Dimensions.get('window').width,
+                        height:(Dimensions.get('window').width)/2}}
+          />
+          <Text style={[styles.ComingSoonText,{alignSelf:'center'}]}>
+          On This Week
           </Text>
 
            <ListView
@@ -134,7 +146,9 @@ export default class defaultEvent extends Component{
              initialListSize={20}
              dataSource={this.state.dataSource}
              renderRow={this._renderRow.bind(this)}
+             style={styles.paddingBottom}
            />
+        </ScrollView>
         </View>
       );
     }
@@ -144,8 +158,7 @@ export default class defaultEvent extends Component{
 const styles = StyleSheet.create({
   container: {
     flexDirection:'column',
-    backgroundColor:'#C0CCD9',
-    paddingBottom:100
+    backgroundColor:'#F5F5F5',
   },
   headerBarContainer: {
       flexDirection: 'column',
@@ -173,7 +186,7 @@ const styles = StyleSheet.create({
   EventImageBox:{
     flexDirection:'row',
     margin:3,
-    backgroundColor:'#C0CCD9',
+    backgroundColor:'white',
   },
   EventImageItem:{
    height:110,
@@ -190,11 +203,14 @@ const styles = StyleSheet.create({
   },
   ComingSoonText:{
     fontSize:20,
-    color:'white',
+    color:'black',
     paddingTop:5,
     paddingBottom:5,
     fontWeight:'800',
-    backgroundColor:'rgba(0,0,0,.6)',
+    backgroundColor:'transparent',
   },
+  paddingBottom:{
+    paddingBottom:50,
+  }
 
 });

@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   container: {
     flex:1,
     flexDirection:'column',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#F5F5F5',
   },
   headerBarContainer: {
       flexDirection: 'column',

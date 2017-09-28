@@ -84,8 +84,8 @@ const styles = StyleSheet.create({
     textBox:{
       flexDirection: 'column',
       paddingTop: 40,
-      paddingLeft: 50,
-      paddingRight: 50,
+      paddingLeft: 30,
+      paddingRight: 30,
       backgroundColor: 'white',
     },
     textStyle:{

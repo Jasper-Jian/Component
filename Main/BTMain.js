@@ -19,6 +19,7 @@ import Home from '../Home/BTHome';
 import Shop from '../Event/BTEvent';
 import Mine from '../Mine/BTMine';
 import More from '../More/BTMore';
+import Contact_us from '../Contact_us/ContactUs';
 const HOME = 'home';
 export default class Main extends Component{
     // initialize home page state
@@ -48,12 +49,13 @@ export default class Main extends Component{
     };
     render() {
         return (
-            <TabNavigator tabBarStyle={{ backgroundColor:'#F5FFFA' }} >
+            <TabNavigator tabBarStyle={{ backgroundColor:'#C0CCD9' }} >
                 {/*--Main--*/}
                 <TabNavigator.Item
-                  title="Main"
-                  renderIcon={() => <Image style={styles.iconStyle} source={require('../images/icon_tabbar_homepage.png')} />}
-                  renderSelectedIcon={() => <Image style={styles.iconStyle} source={require('../images/icon_tabbar_homepage_selected.png')} />}
+                  title="Home"
+                  tileStyle={{color:'black'}}
+                  renderIcon={() => <Image style={styles.iconStyle} source={require('../images/home.png')} />}
+                  renderSelectedIcon={() => <Image style={styles.iconStyle} source={require('../images/home-2.png')} />}
                   onPress={()=>{this.setState({selectedTab:'home'})}}
                   selected={this.state.selectedTab === 'home'}
                 >
@@ -71,9 +73,9 @@ export default class Main extends Component{
 
                 {/*--Event--*/}
                 <TabNavigator.Item
-                    title="Event"
-                    renderIcon={() => <Image source={require('../images/icon_tabbar_merchant_normal.png')} style={styles.iconStyle}/>} // icon
-                    renderSelectedIcon={() =><Image source={require('../images/icon_tabbar_merchant_selected.png')} style={styles.iconStyle}/>}   // when icon selected
+                    title="What's on"
+                    renderIcon={() => <Image source={require('../images/whats_on.png')} style={styles.iconStyle}/>} // icon
+                    renderSelectedIcon={() =><Image source={require('../images/whats_on_selected.png')} style={styles.iconStyle}/>}   // when icon selected
                     onPress={()=>{this.setState({selectedTab:'Event'})}}
                     selected={this.state.selectedTab === 'Event'}
                 >
@@ -92,8 +94,8 @@ export default class Main extends Component{
                 {/*--Mine--*/}
                 <TabNavigator.Item
                     title="Mine"
-                    renderIcon={() => <Image source={require('../images/icon_tabbar_mine.png')}style={styles.iconStyle}/>} // icon
-                    renderSelectedIcon={() =><Image source={require('../images/icon_tabbar_mine_selected.png')} style={styles.iconStyle}/>}   // selected icon
+                    renderIcon={() => <Image source={require('../images/me.png')}style={styles.iconStyle}/>} // icon
+                    renderSelectedIcon={() =><Image source={require('../images/me_selected.png')} style={styles.iconStyle}/>}   // selected icon
                     onPress={()=>{this.setState({selectedTab:'mine'})}}
                     selected={this.state.selectedTab === 'mine'}
                 >
@@ -112,13 +114,33 @@ export default class Main extends Component{
                 {/*--MoreInfo--*/}
                 <TabNavigator.Item
                     title="More"
-                    renderIcon={() => <Image source={require('../images/icon_tabbar_misc.png')} style={styles.iconStyle}/>} // icon
-                    renderSelectedIcon={() =><Image source={require('../images/icon_tabbar_misc_selected.png')} style={styles.iconStyle}/>}   // when icon selected
+                    renderIcon={() => <Image source={require('../images/more.png')} style={styles.iconStyle}/>} // icon
+                    renderSelectedIcon={() =><Image source={require('../images/more_selected.png')} style={styles.iconStyle}/>}   // when icon selected
                     onPress={()=>{this.setState({selectedTab:'more'})}}
                     selected={this.state.selectedTab === 'more'}
                 >
                     <Navigator
                         initialRoute={{name:'More',component:More}}
+                        configureScene={()=>{
+                             return Navigator.SceneConfigs.PushFromRight;
+                        }}
+                        renderScene={(route,navigator)=>{
+                           let Component = route.component;
+                           return <Component {...route.passProps} navigator={navigator}/>;
+                        }}
+                    />
+                </TabNavigator.Item>
+
+                {/*--Contact us Info--*/}
+                <TabNavigator.Item
+                    title="Contact Us"
+                    renderIcon={() => <Image source={require('../images/Contact_us_Icon.png')} style={styles.iconStyle}/>} // icon
+                    renderSelectedIcon={() =><Image source={require('../images/Contact_us_Icon_selected.png')} style={styles.iconStyle}/>}   // when icon selected
+                    onPress={()=>{this.setState({selectedTab:'Contact_us'})}}
+                    selected={this.state.selectedTab === 'Contact_us'}
+                >
+                    <Navigator
+                        initialRoute={{name:'Contact_us',component:Contact_us}}
                         configureScene={()=>{
                              return Navigator.SceneConfigs.PushFromRight;
                         }}

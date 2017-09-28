@@ -118,7 +118,9 @@ export default class comment extends Component {
     render() {
         return (
             <View style={styles.container}>
+            <ScrollView>
                 {this._renderContent()}
+            </ScrollView>
             </View>
         );
     }
@@ -163,7 +165,7 @@ export default class comment extends Component {
               <StarRatingBar
                   readOnly={false}
                   continuous={true}
-                  score={5}
+                  score={0}
                   onStarValueChanged={(score) => {
                     this.setState({
                         score: score

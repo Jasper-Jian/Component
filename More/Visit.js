@@ -35,26 +35,20 @@ export default class Visit extends Component {
               style={styles.headImage}
         />
 
-        <View style={styles.mapBox}>
-
-        </View>
-
 
         <View style={styles.textBox}>
+        <Image source={require('../images/map.png')}
+              style={{resizeMode: 'stretch',
+                      width:Dimensions.get('window').width-60,
+                      height:Dimensions.get('window').width-60-160,
+                      marginBottom:20}}
+        />
         <Image source={require('../images/Visit_img.png')}
               style={styles.middleImage}
         />
           <Text style={styles.textStyle}>
           {'\n'}
-          <Text style={{fontWeight:'bold',fontSize: 21}}>
-          PHONE{'\n'}
-          </Text>
-          09 309 7433   ENQUIRIES{'\n'}
-          09 361 1000   BOOKINGS via ITICKET{'\n'}{'\n'}
-          <Text style={{fontWeight:'bold',fontSize: 21}}>
-          GENERAL ENQUIRIES{'\n'}
-          </Text>
-          info@basementtheatre.co.nz{'\n'}{'\n'}
+
           <Text style={{fontWeight:'bold',fontSize: 21}}>
           ADDRESS{'\n'}
           </Text>
@@ -115,7 +109,7 @@ const styles = StyleSheet.create({
     },
     textBox:{
       flexDirection: 'column',
-      paddingTop: 40,
+      paddingTop: 20,
       paddingLeft: 30,
       paddingRight: 30,
       backgroundColor: 'white',
@@ -132,8 +126,9 @@ const styles = StyleSheet.create({
       fontWeight:'bold',
     },
     mapBox:{
-      width: Dimensions.get('window').width,
-      height: Dimensions.get('window').width-30,
+      width: 748,
+      height: 312,
+      resizeMode: 'stretch',
     },
     middleImage:{
       width:Dimensions.get('window').width-60,
