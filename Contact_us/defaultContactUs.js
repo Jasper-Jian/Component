@@ -10,11 +10,22 @@ import {
   Navigator,
   TextInput,
   Linking,
+  ToastAndroid
 } from 'react-native';
-
+import {firebaseRef} from '../services/firebase';
+import firebase from 'firebase';
 import Support from '../More/Support';
 
 export default class defaultContactUs extends Component{
+  constructor (props) {
+  super(props);
+  this.state = {
+    email: '',
+    firstName: '',
+    lastName:'',
+    message:''
+  }
+}
 
   clickJumpToSupport(){
       const{navigator} = this.props;
@@ -25,7 +36,36 @@ export default class defaultContactUs extends Component{
         });
       }
   }
+  submit(){
+    var path = "2017/ContactUs/";
+    var query = firebase.database().ref(path);
+    var user = firebaseRef.auth().currentUser;
+    if(this.state.firstName!=""){
+      if(this.state.lastName!=""){
+        if(this.state.email!="" ){
+          if(this.state.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)){
+            var data = {
+              firstName: this.state.firstName,
+              lastName: this.state.lastName,
+              email: this.state.email,
+              message: this.state.message
+            }
+          query.push(data);
+          ToastAndroid.show('Submit successful', ToastAndroid.SHORT);
+          }else{
+            ToastAndroid.show('Email is badly formated', ToastAndroid.SHORT);
+          }
+        }else{
+            ToastAndroid.show('Please enter the Email', ToastAndroid.SHORT);
+        }
+      }else{
+        ToastAndroid.show('Please enter the Last Name', ToastAndroid.SHORT);
+      }
+    }else{
+      ToastAndroid.show('Please enter the First Name', ToastAndroid.SHORT);
+    }
 
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -114,6 +154,7 @@ export default class defaultContactUs extends Component{
           keyboardType='web-search'
           placeholder='First Name'
           underlineColorAndroid={'transparent'}
+          onChangeText={(text) => this.setState({firstName: text})}
       />
       </View>
 
@@ -123,6 +164,7 @@ export default class defaultContactUs extends Component{
           keyboardType='web-search'
           placeholder='Last Name'
           underlineColorAndroid={'transparent'}
+          onChangeText={(text) => this.setState({lastName: text})}
       />
       </View>
 
@@ -136,6 +178,7 @@ export default class defaultContactUs extends Component{
           keyboardType='web-search'
           placeholder='Email Address'
           underlineColorAndroid={'transparent'}
+          onChangeText={(text) => this.setState({email: text})}
       />
       </View>
 
@@ -149,12 +192,13 @@ export default class defaultContactUs extends Component{
           keyboardType='web-search'
           placeholder='Enter your message here'
           underlineColorAndroid={'transparent'}
+          onChangeText={(text) => this.setState({message: text})}
       />
       </View>
 
-      <TouchableOpacity onPress={() => {}}>
+      <TouchableOpacity onPress={() => {this.submit();}}>
         <View style={styles.buttonStyle}>
-            <Text style={styles.ButtonText}>submit</Text>
+            <Text style={styles.ButtonText}>Submit</Text>
         </View>
       </TouchableOpacity>
 
@@ -175,7 +219,7 @@ export default class defaultContactUs extends Component{
 
       <TouchableOpacity onPress = {this.clickJumpToSupport.bind(this)}>
         <View style={styles.buttonStyle}>
-            <Text style={styles.ButtonText}>donate</Text>
+            <Text style={styles.ButtonText}>Donate</Text>
         </View>
       </TouchableOpacity>
 

@@ -65,9 +65,9 @@ export default class comment extends Component {
     }
     upload(){
       var path = "2017/Comment/"+this.props.data.title;
-      var score = "2017/Comment/"+this.props.data.title;
-      var update_query = firebase.database().ref(score);
+      var score = "2017/HomePage/"+this.props.data.title;
       var query = firebase.database().ref(path);
+      var update_query = firebase.database().ref(score);
       var user = firebaseRef.auth().currentUser;
       this.setState({user});
       if(user != null){
@@ -77,7 +77,7 @@ export default class comment extends Component {
              total = total + parseInt(this.state.data[i].data.score);
           }
           var average=0;
-          average = total/((this.state.data.length/2)+1);
+          average = parseInt(total/((this.state.data.length/2)+1));
               console.log(total);
               console.log(average);
           var data={
@@ -85,9 +85,9 @@ export default class comment extends Component {
             score:this.state.score,
             content:this.state.evaluateText
           }
-          var rate = {score:average};
           query.push(data);
-          // update_query.push(rate);
+          update_query.update({score:average});
+          
           ToastAndroid.show('Upload successful', ToastAndroid.SHORT);
         }else{
           ToastAndroid.show('Please select a score', ToastAndroid.SHORT);
