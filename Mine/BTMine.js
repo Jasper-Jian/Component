@@ -33,7 +33,7 @@ export default class Mine extends Component{
     this.state={
       email:'',
       password:'',
-      user: null
+      user: null,
     }
     this._login = this._login.bind(this);
     this._fbAuth=this._fbAuth.bind(this);
@@ -123,6 +123,7 @@ export default class Mine extends Component{
       .done();
 
     }else if (firebase.auth().currentUser!=null){
+      LoginManager.logOut();
       firebase.auth().signOut().then(function() {
         // Sign-out successful.
         ToastAndroid.show('Sign-out successful', ToastAndroid.SHORT);
@@ -159,41 +160,38 @@ export default class Mine extends Component{
     //facebook login
   async _fbAuth() {
     try{
-      LoginManager.logInWithReadPermissions(['public_profile','email']).then(function (result) {
-          if (result.isCancelled) {
+      await      LoginManager.logInWithReadPermissions(['public_profile','email']).then(function (user) {
+          if (user.isCancelled) {
               ToastAndroid.show('Login cancelled', ToastAndroid.SHORT);
           } else {
             AccessToken.getCurrentAccessToken().then((accessTokenData) => {
               const credential = firebase.auth.FacebookAuthProvider.credential(accessTokenData.accessToken);
-              firebase.auth().signInWithCredential(credential).then((result)=>{
-                //promise was successful
-
-              },(error)=>{
-                //promis was rejected
-                console.log(console.error());
+              firebase.auth().signInWithCredential(credential).catch(function(error) {
+              // Handle Errors here.
+              var errorCode = error.code;
+              var errorMessage = error.message;
+              // The email of the user's account used.
+              var email = error.email;
+              // The firebase.auth.AuthCredential type that was used.
+              var credential = error.credential;
+              // ...
+              });
+                console.log(user);
+                // ToastAndroid.show('Logined', ToastAndroid.SHORT);
               })
-
-            },(error =>{
-              console.log('Some erroe occured: '+error);
-            }))
-
+              .catch((err) => {
+                console.log(err);
+              })
+              .done();
           }
-
-      },
-          function (error) {
-              console.log('An error occured:' + error);
-          });
-
-          const user =  await AccessToken.getCurrentAccessToken().accessToken;
-          console.log(user);
-          this.setState({user: user});
-
+      });
+      const user = await firebaseRef.auth().currentUser;
+        this.setState({user});
     }
+
     catch(err) {
         console.log("error", err.code, err.message);
       }
-
-
 
   }
   //Goto Register page
@@ -263,31 +261,8 @@ export default class Mine extends Component{
     <TouchableOpacity style={styles.textfbLoginViewStyle} onPress={() => {this._fbAuth()}}>
       <LoginButton
         publishPermissions={["publish_actions"]}
-        onLoginFinished={
-          (error, result) => {
-            if (error) {
-              alert("login has error: " + result.error);
-            } else if (result.isCancelled) {
-              alert("login is cancelled.");
-            } else {
-              AccessToken.getCurrentAccessToken().then((data) => {
-            let accessToken = data.accessToken
-            alert(accessToken.toString())
-            const responseInfoCallback = (error, result) => {
-              if (error) {
-                console.log(error)
-                alert('Error fetching data: ' + error.toString());
-              } else {
-                console.log(result)
-                alert('Success fetching data: ' + result.toString());
-              }
-            }
-            })
-          }
-        }
-      }
-        onLogoutFinished={() => ToastAndroid.show('Logout successful', ToastAndroid.SHORT)}/>
-
+        onLoginFinished={() =>{this._login();}}
+        />
         </TouchableOpacity>
          <GoogleSigninButton style={styles.textgoogleLoginViewStyle} color={GoogleSigninButton.Color.Light}  onPress={() => { this._signIn(); }}/>
          </View>
@@ -295,7 +270,7 @@ export default class Mine extends Component{
     </View>
         );
     }
-    if (this.state.user||this.state.status) {
+    if (this.state.user) {
        return (
          <View style={styles.container}>
            <Text style={{fontSize: 18, fontWeight: 'bold', marginBottom: 20}}>Welcome {this.state.user.name}</Text>
