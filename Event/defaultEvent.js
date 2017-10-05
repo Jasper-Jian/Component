@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ScrollableTabView, {DefaultTabBar, } from 'react-native-scrollable-tab-view';
 import {
   StyleSheet,
   Text,
@@ -10,26 +11,29 @@ import {
   Navigator,
   ListView,
 } from 'react-native';
-import Mainstyles from '../StylesSheet';
 import EventDetails from '../Event/BTEventDetail';
 var {width}=Dimensions.get('window').width;
-var query = firebase.database().ref("2017/March");
+var monthly = firebase.database().ref("2017/October");
 var query = firebase.database().ref("2017/HomePage");
+import styles from '../StylesSheet';
 import {firebaseRef} from '../services/firebase';
 import firebase from 'firebase';
 export default class defaultEvent extends Component{
   constructor(props){
     super(props);
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    var ds2 = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     items=[];
+    monthlyItems=[];
     this.state = {
         dataSource: ds,
         loaded:false,
+        dataSource2: ds2,
       };
 
   }
   componentWillMount() {
-      query.on('child_added',(snap)=>{
+      query.once('value',(snap)=>{
         snap.forEach((data)=>{
           items.push({
             key:data.key,
@@ -38,6 +42,18 @@ export default class defaultEvent extends Component{
         });
           this.setState({
             dataSource:this.state.dataSource.cloneWithRows(items),
+
+        });
+      })
+      monthly.once('value',(snap)=>{
+        snap.forEach((data)=>{
+          monthlyItems.push({
+            key:data.key,
+            data:data.val(),
+          });
+        });
+          this.setState({
+            dataSource2:this.state.dataSource.cloneWithRows(monthlyItems),
             loaded:true
         });
       })
@@ -56,23 +72,49 @@ export default class defaultEvent extends Component{
           });
       }
   }
-
   _renderRow(data){
       return (
+            <View style={styles.ImageBox}>
+                <Image source={{uri: data.data.images}}style={styles.TitleitemStyle}/>
+                <Text style={styles.DetailText}>{data.data.title}</Text>
+                <View style={styles.Divider}></View>
+                <Text style={styles.TimeText}>{data.data.date},   {data.data.time}</Text>
+                <View style={styles.Divider}></View>
+                <View style={styles.InfoBTStyle}>
+                <TouchableOpacity onPress={()=>this._pressRow(data)}>
+                    {/*Info button*/}
+                    <View style={styles.InfoViewStyle}>
+                        <Text style={styles.MoreInfoText}>More Info</Text>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={()=>this.pushToBooking(data)}>
+                    {/*Info button*/}
+                    <View style={styles.BookNowViewStyle}>
+                        <Text style={styles.BookNowText}>Book Now</Text>
+                    </View>
+                </TouchableOpacity>
+                </View>
+            </View>
+
+          );
+  }
+
+  _renderMonthlyRow(data){
+      return (
           <TouchableOpacity onPress={()=>this._pressRow(data)}>
-              <View style={styles.EventImageBox}>
+              <View style={Eventstyles.EventImageBox}>
               <View>
-                <Image source={{uri: data.data.images}} style={styles.EventImageItem}></Image>
+                <Image source={{uri: data.data.images}} style={Eventstyles.EventImageItem}></Image>
               </View>
                 <View>
-                  <Text style={Mainstyles.TitleText}>
+                  <Text style={Eventstyles.ComingSoonText}>
                   {data.data.title}
                   </Text>
-                  <View style={styles.Divider}></View>
-                  <Text style={styles.EventTimeText}>
+                  <View style={Eventstyles.Divider}></View>
+                  <Text style={Eventstyles.EventTimeText}>
                    {data.data.date}, {data.data.time}
                    </Text>
-                   <View style={styles.Divider}></View>
+                   <View style={Eventstyles.Divider}></View>
                  </View>
                </View>
           </TouchableOpacity>
@@ -109,9 +151,9 @@ export default class defaultEvent extends Component{
   render() {
     if(!this.state.loaded){
       return (
-        <View style={styles.container}>
-        <View style={styles.headerBarContainer}>
-        <Text style={styles.headText}>Event</Text>
+        <View style={Eventstyles.container}>
+        <View style={Eventstyles.headerBarContainer}>
+        <Text style={Eventstyles.headText}>Event</Text>
         </View>
         <Image source={require('../images/whats_on_head_image.png')}
                 style={{resizeMode: 'stretch',
@@ -119,14 +161,14 @@ export default class defaultEvent extends Component{
                         height:(Dimensions.get('window').width)/2,
                         marginBottom:20}}
           />
-          <Text style={styles.titleText}> {'\n'}Loading Detials....{'\n'}</Text>
+          <Text style={Eventstyles.titleText}> {'\n'}Loading Detials....{'\n'}</Text>
         </View>
       );
     }else{
       return (
         <View style={styles.container}>
-        <View style={styles.headerBarContainer}>
-        <Text style={styles.headText}>What‘s On</Text>
+        <View style={Eventstyles.headerBarContainer}>
+        <Text style={Eventstyles.headText}>What‘s On</Text>
         </View>
         <ScrollView>
         <Image source={require('../images/whats_on_head_image.png')}
@@ -134,34 +176,47 @@ export default class defaultEvent extends Component{
                         width:Dimensions.get('window').width,
                         height:(Dimensions.get('window').width)/2}}
           />
-          <Text style={[styles.ComingSoonText,{alignSelf:'center'}]}>
-          On This Week
-          </Text>
+          <ScrollableTabView
+          renderTabBar={() => <DefaultTabBar />}
+          tabBarUnderlineColor='black'
+          tabBarBackgroundColor='#C0CCD9'
+          tabBarActiveTextColor='black'
+          tabBarInactiveTextColor='black'
+          tabBarTextStyle={{fontSize: 18}}
+          >
 
+        <View tabLabel='On This Week'>
            <ListView
              pageSize={4}
              initialListSize={10}
              dataSource={this.state.dataSource}
              renderRow={this._renderRow.bind(this)}
-             style={styles.paddingBottom}
+             style={Eventstyles.paddingBottom}
            />
-           <Text style={[styles.ComingSoonText,{alignSelf:'center'}]}>
-           On This Month
-           </Text>
-           <Text style={[styles.ComingSoonText,{alignSelf:'center'}]}>
-           On This Month
-           </Text>
-        </ScrollView>
+
+           </View>
+           <View tabLabel='On This Month'>
+
+            <ListView
+              pageSize={4}
+              initialListSize={10}
+              dataSource={this.state.dataSource2}
+              renderRow={this._renderMonthlyRow.bind(this)}
+              style={Eventstyles.paddingBottom}
+            />
+            </View>
+          </ScrollableTabView>
+           </ScrollView>
         </View>
       );
     }
   }
 }
 
-const styles = StyleSheet.create({
+const Eventstyles = StyleSheet.create({
   container: {
     flexDirection:'column',
-    backgroundColor:'#F5F5F5',
+    backgroundColor:'#F5F5F5',    
   },
   headerBarContainer: {
       flexDirection: 'column',
@@ -207,8 +262,10 @@ const styles = StyleSheet.create({
     color:'black',
     paddingTop:5,
     paddingBottom:5,
-    fontWeight:'800',
     backgroundColor:'transparent',
+    color:'black',
+    fontWeight:'500',
+    marginRight:130,
   },
   paddingBottom:{
     paddingBottom:50,

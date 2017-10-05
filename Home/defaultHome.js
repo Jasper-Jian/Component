@@ -74,7 +74,7 @@ export default class defaultHome extends Component{
           });
         })
         var image_query = firebase.database().ref("2017/showCase");
-          image_query.on('child_added',(snap)=>{
+          image_query.on('value',(snap)=>{
             snap.forEach((image)=>{
               imageData.push({
                 key:image.key,
@@ -164,14 +164,15 @@ export default class defaultHome extends Component{
           style={styles.tabHeading}
           renderTabBar={()=><DefaultTabBar backgroundColor='rgba(255, 255, 255, 0.7)' />}
           tabBarPosition='overlayBottom'
-          tabBarBackgroundColor='rgba(0, 0, 0, 0.2)'
+          tabBarBackgroundColor='rgba(0, 0, 0, 0.3)'
           tabBarActiveTextColor='blue'
-          tabBarInactiveTextColor='black'
+          tabBarInactiveTextColor='white'
           tabBarUnderlineColor='black'
           tabBarTextStyle={{fontSize: 12}}
         >
         <View tabLabel='01'>
         {/* <TouchableOpacity onPress={console.log(this.state.dataSource)}> */}
+
         <Image key={1} source={{uri:this.state.image[0].image.imagelink}} style={styles.itemStyle}/>
         {/* </TouchableOpacity> */}
         </View>
@@ -180,6 +181,9 @@ export default class defaultHome extends Component{
         </View>
         <View tabLabel='03'>
         <Image key={3} source={{uri:this.state.image[2].image.imagelink}} style={styles.itemStyle}/>
+        </View>
+        <View tabLabel='04'>
+        <Image key={4} source={{uri:this.state.image[3].image.imagelink}} style={styles.itemStyle}/>
         </View>
         </ScrollableTabView>
 
