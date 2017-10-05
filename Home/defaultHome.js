@@ -74,7 +74,7 @@ export default class defaultHome extends Component{
           });
         })
         var image_query = firebase.database().ref("2017/showCase");
-          image_query.on('value',(snap)=>{
+          image_query.on('child_added',(snap)=>{
             snap.forEach((image)=>{
               imageData.push({
                 key:image.key,

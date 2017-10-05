@@ -29,7 +29,7 @@ export default class defaultEvent extends Component{
 
   }
   componentWillMount() {
-      query.on('value',(snap)=>{
+      query.on('child_added',(snap)=>{
         snap.forEach((data)=>{
           items.push({
             key:data.key,
@@ -119,9 +119,6 @@ export default class defaultEvent extends Component{
                         height:(Dimensions.get('window').width)/2,
                         marginBottom:20}}
           />
-          <Text style={styles.ComingSoonText}>
-          Coming Soon Event
-          </Text>
           <Text style={styles.titleText}> {'\n'}Loading Detials....{'\n'}</Text>
         </View>
       );
@@ -143,11 +140,17 @@ export default class defaultEvent extends Component{
 
            <ListView
              pageSize={4}
-             initialListSize={20}
+             initialListSize={10}
              dataSource={this.state.dataSource}
              renderRow={this._renderRow.bind(this)}
              style={styles.paddingBottom}
            />
+           <Text style={[styles.ComingSoonText,{alignSelf:'center'}]}>
+           On This Month
+           </Text>
+           <Text style={[styles.ComingSoonText,{alignSelf:'center'}]}>
+           On This Month
+           </Text>
         </ScrollView>
         </View>
       );
@@ -167,8 +170,6 @@ const styles = StyleSheet.create({
       paddingTop: 0,
       height: 48,
       backgroundColor: '#C0CCD9',
-
-
   },
   headText: {
     paddingTop: 8,
