@@ -185,14 +185,14 @@ export default class Mine extends Component{
               .done();
           }
       });
-      const user = await firebaseRef.auth().currentUser;
-        this.setState({user});
+      ;
     }
 
     catch(err) {
         console.log("error", err.code, err.message);
       }
-
+      const user = await firebaseRef.auth().currentUser;
+      this.setState({user})
   }
   //Goto Register page
   _ToRegister() {
