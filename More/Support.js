@@ -33,6 +33,7 @@ export default class Support extends Component {
               style={styles.backButton}
         />
       </TouchableOpacity>
+      <Text style={styles.headText}>Support</Text>
       </View>
       <ScrollView>
         <Image source={require('../images/Support_Head_Image.png')}
@@ -49,7 +50,7 @@ export default class Support extends Component {
           Omnigraphics, Soar Printing and Phantom Billstickers offer us so much support in their respective industries, it’s impossible to imagine how we would get by without them. {'\n'}{'\n'}
           Then there’s our Basement Lovers Club. These are people who lend themselves to Basement in many and varied ways, some give us the gift of their time and expertise, assisting us with specific projects, others offer a cash contribution to the theatre, or to a specific programme. {'\n'}{'\n'}
           However you want to show Basement your love, we will always welcome your support with open arms. {'\n'}{'\n'}
-          <Text style={{fontWeight:'bold'}}>
+          <Text style={{fontFamily:'GT-Haptik-Bold',}}>
           Huge thanks to long-time Basement supporter Jonty Crane, and to Auckland Council, whose kind contributions made this website possible. Thanks to Studio Alexander for our award-winning design. {'\n'}{'\n'}
           </Text>
           </Text>
@@ -116,13 +117,22 @@ const styles = StyleSheet.create({
         paddingRight: 10,
         paddingTop: 0,
         height: 48,
-        backgroundColor: '#C0CCD9',
+        backgroundColor: 'white',
         alignItems: 'center',
     },
     backButton: {
         height: 35,
         width: 35,
         resizeMode: 'stretch',
+    },
+    headText: {
+      fontFamily: 'GT-Haptik-Bold',
+      paddingTop: 0,
+      paddingLeft: (Dimensions.get('window').width-35)/4,
+      color:'rgba(2,0,252,1)',
+      fontSize:24,
+      textAlign :'center',
+
     },
     textBox:{
       flexDirection: 'column',
@@ -132,6 +142,7 @@ const styles = StyleSheet.create({
       backgroundColor: '#F5F5F5',
     },
     textStyle:{
+      fontFamily:'GT-Haptik-Regular',
       fontSize: 16,
       color: 'black',
       lineHeight: 30,
@@ -142,9 +153,9 @@ const styles = StyleSheet.create({
       borderBottomColor : '#C0CCD9',
     },
     bigText:{
+      fontFamily:'GT-Haptik-Bold',
       fontSize: 24,
       color: 'black',
       lineHeight: 30,
-      fontWeight:'bold',
     }
   })

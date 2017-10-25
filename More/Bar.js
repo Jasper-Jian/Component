@@ -28,6 +28,7 @@ export default class Bar extends Component {
               style={styles.backButton}
         />
       </TouchableOpacity>
+      <Text style={styles.headText}>Bar</Text>
       </View>
       <ScrollView>
         <Image source={require('../images/Bar_Head_Image.png')}
@@ -39,12 +40,12 @@ export default class Bar extends Component {
           Come drink with us this summer with warm weather picks from our favourite brew buddies including Garage Project, Funk Estate, and Panhead. We’ll be stocking crisp ambers, extra pales and some fruitier, more tropical flavours, plus the return of the big ol’ selection of pils to pair perfectly with sitting on a beanbag in a carpark.{'\n'}{'\n'}
           If wine’s what you’re after try one of our new cheap(ish) rosé pours or a smooth house Sav. And as always, we have a full range of spirits, bubbles, and many more craft brews for you to choose from as well–Behemoth, Galbraiths, our trusty Brothers on tap... and yeah, okay, you can still get your Tiger too.{'\n'}{'\n'}
           We like to change it up, so we can’t give you the full list of goodness, but usual stock includes delights such as:{'\n'}{'\n'}
-          <Text style={{fontWeight:'bold'}}>
+          <Text style={{fontFamily:'GT-Haptik-Bold'}}>
           • Brothers Beer • Galbraiths • Panhead • Liberty • Garage Project • Zeffer • Hallertau • Funk Estate • Spy Valley Sav • Crossroads Pinot Gris • Babich Chardonnay • Mahi Rose • Phat Jam Pinot Noir on tap • Deliverance Pinot Noir • Yealands Syrah • Karma{'\n'}{'\n'}
           </Text>
           There’s lots of yummy snacks at the bar, including Proper Crisps. We also bring Tanukis to you, cos we know one set of stairs is just too much.{'\n'}{'\n'}
           So chill in the sun, order up big on the cabbage and get in early on the most sort after beanbags and beers in town.{'\n'}{'\n'}
-          <Text style={{fontWeight:'bold'}}>
+          <Text style={{fontFamily:'GT-Haptik-Bold'}}>
           Basement’s bar is open 5pm - late; Tuesday through Saturday.{'\n'}{'\n'}
           </Text>
           Functions and hostings welcome.{'\n'}{'\n'}
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
     container: {
         //set to full screen
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: '#F5F5F5',
     },
     headImage: {
       width:Dimensions.get('window').width,
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
         paddingRight: 10,
         paddingTop: 0,
         height: 48,
-        backgroundColor: '#C0CCD9',
+        backgroundColor: 'white',
         alignItems: 'center',
     },
     backButton: {
@@ -81,14 +82,24 @@ const styles = StyleSheet.create({
         width: 35,
         resizeMode: 'stretch',
     },
+    headText: {
+      fontFamily: 'GT-Haptik-Bold',
+      paddingTop: 0,
+      paddingLeft: (Dimensions.get('window').width-35)/4,
+      color:'rgba(2,0,252,1)',
+      fontSize:24,
+      textAlign :'center',
+
+    },
     textBox:{
       flexDirection: 'column',
       paddingTop: 40,
       paddingLeft: 30,
       paddingRight: 30,
-      backgroundColor: 'white',
+      backgroundColor: '#F5F5F5',
     },
     textStyle:{
+      fontFamily:'GT-Haptik-Regular',
       fontSize: 16,
       color: 'black',
       lineHeight: 30,

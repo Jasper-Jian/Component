@@ -49,11 +49,11 @@ export default class Main extends Component{
     };
     render() {
         return (
-            <TabNavigator tabBarStyle={{ backgroundColor:'#C0CCD9' }} >
+            <TabNavigator tabBarStyle={{ backgroundColor:'white' }} >
                 {/*--Main--*/}
                 <TabNavigator.Item
                   title="Home"
-                  tileStyle={{color:'black'}}
+                  tileStyle={{color:'black',fontFamily:'GT-Haptik-Regular'}}
                   renderIcon={() => <Image style={styles.iconStyle} source={require('../images/home.png')} />}
                   renderSelectedIcon={() => <Image style={styles.iconStyle} source={require('../images/home-2.png')} />}
                   onPress={()=>{this.setState({selectedTab:'home'})}}
@@ -74,7 +74,7 @@ export default class Main extends Component{
                 {/*--Event--*/}
                 <TabNavigator.Item
                     title="What's on"
-                    renderIcon={() => <Image source={require('../images/whats_on.png')} style={styles.iconStyle}/>} // icon
+                    renderIcon={() => <Image source={require('../images/whats_on_selected.png')} style={styles.iconStyle}/>} // icon
                     renderSelectedIcon={() =><Image source={require('../images/whats_on_selected.png')} style={styles.iconStyle}/>}   // when icon selected
                     onPress={()=>{this.setState({selectedTab:'Event'})}}
                     selected={this.state.selectedTab === 'Event'}

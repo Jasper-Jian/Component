@@ -17,6 +17,7 @@ import {
 } from 'react-native';
 import comment from '../Event/comment';
 import BookingSite from '../Event/BookingSite';
+import Mainstyles from '../StylesSheet';
 
 import {firebaseRef} from '../services/firebase';
 import firebase from 'firebase';
@@ -116,15 +117,16 @@ export default class review extends Component{
       );
     }else{
     return(
-      <View style={styles.container}>
-      <ScrollView>
+
+      <ScrollView style={styles.container}>
+      <Image key={1} source={{uri:this.props.data.images}} style={Mainstyles.itemStyle}/>
       <ScrollableTabView
-      style={{marginTop: 10, }}
+      style={{marginTop: 10}}
       renderTabBar={() => <DefaultTabBar />}
       tabBarUnderlineColor='black'
-      tabBarBackgroundColor='#C0CCD9'
-      tabBarActiveTextColor='black'
-      tabBarInactiveTextColor='black'
+      tabBarBackgroundColor='rgba(2,0,252,1)'
+      tabBarActiveTextColor='white'
+      tabBarInactiveTextColor='white'
       tabBarTextStyle={{fontSize: 18}}
       >
 
@@ -159,7 +161,7 @@ export default class review extends Component{
       </TouchableOpacity>
       <View style={styles.DetailBox}>
       <Text style={styles.MoreInfoText}>
-      {'\n'}* Concession prices available to: Seniors 65+, Students with ID, Equity Members with ID.
+      {'\n'}* Concession prices available to: Seniors 65+, Students with ID, Equity Members with ID.{'\n'}{'\n'}
       </Text>
       </View>
     </View>
@@ -191,7 +193,7 @@ export default class review extends Component{
     </View>
   </ScrollableTabView>
   </ScrollView>
-      </View>
+
     )
     }
   }
@@ -202,27 +204,27 @@ const styles = StyleSheet.create({
   container: {
     flex:1,
     flexDirection:'column',
-    backgroundColor: '#C0CCD9',
+    backgroundColor: 'rgba(2,0,252,1)',
   },
   titleText: {
-    color:'black',
-    fontWeight:'bold',
+    fontFamily:'GT-Haptik-Bold',
+    color:'white',
     fontSize: 24,
     lineHeight: 30,
   },
   headText: {
+    fontFamily:'GT-Haptik-Bold',
     paddingTop: 0,
     paddingLeft: 85,
     color:'black',
     fontSize:28,
-    fontWeight:'bold',
     textAlign :'center',
 
   },
   EventTimeText:{
+    fontFamily:'GT-Haptik-Regular',
     color:'white',
     fontSize:18,
-    fontWeight:'400',
   },
   EventImageBox:{
       flexDirection:'row',
@@ -241,16 +243,15 @@ const styles = StyleSheet.create({
     borderBottomColor : 'rgba(1,165,175,1)',
   },
   MoreInfoText:{
-    color:'black',
-    fontWeight:'400',
+    fontFamily:'GT-Haptik-Regular',
+    color:'white',
     fontSize: 16,
     lineHeight: 30,
   },
   textLoginViewStyle: {
-      width: 200,
+      width: 300,
       height: 45,
-      backgroundColor: 'rgba(206,60,100,1)',
-      borderRadius: 20,
+      backgroundColor: 'rgba(0,250,0,1)',
       alignSelf: 'center',
       justifyContent: 'center',
       alignItems: 'center',
@@ -261,10 +262,10 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   ButtonText:{
+    fontFamily:'GT-Haptik-Regular',
     marginTop:2,
-    color:'white',
+    color:'black',
     fontSize: 20,
-    fontWeight:'600',
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',

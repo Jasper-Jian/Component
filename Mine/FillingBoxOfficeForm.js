@@ -13,12 +13,7 @@ import {
   WebView
 } from 'react-native';
 
-export default class BookingSite extends Component {
-  constructor(props){
-    super(props);
-    console.log(this.props.data);
-    console.log(this.props.data.title);
-  }
+export default class FillingBoxOfficeForm extends Component {
   clickJump(){
     const{navigator} = this.props;
     if(navigator){
@@ -35,13 +30,13 @@ export default class BookingSite extends Component {
               style={styles.backButton}
         />
       </TouchableOpacity>
-      <Text style={styles.headText}>{this.props.data.title}</Text>
+      <Text style={styles.headText}>Submit Box Office Form</Text>
       </View>
       <WebView
         startInLoadingState={true}
         contentInset={{top:20,left:10,right:10}}
         scalesPageToFit ={false}
-        source={{uri:this.props.data.link}}
+        source={{uri: 'https://docs.google.com/forms/d/1appmdvTW2P5u_mjX3_RWwqPGnebQqwduzgJt25pgl7g/viewform?edit_requested=true'}}
       />
       </View>
     );
@@ -52,7 +47,7 @@ const styles = StyleSheet.create({
     container: {
         //set to full screen
         flex: 1,
-        backgroundColor: 'rgba(2,0,252,1)',
+        backgroundColor: 'white',
     },
     headImage: {
       width:Dimensions.get('window').width,
@@ -60,11 +55,11 @@ const styles = StyleSheet.create({
       resizeMode: 'stretch'
     },
     headText: {
-      fontFamily:'GT-Haptik-Bold',
       paddingTop: 0,
       paddingLeft: 15,
-      color:'rgba(2,0,252,1)',
+      color:'rgb(2,0,252)',
       fontSize:24,
+      fontFamily:'GT-Haptik-Bold',
       textAlign :'center',
 
     },

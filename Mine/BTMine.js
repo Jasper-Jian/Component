@@ -16,17 +16,13 @@ import {LoginManager, LoginButton, AccessToken,FBAccessToken} from 'react-native
 import {GoogleSignin, GoogleSigninButton} from 'react-native-google-signin';
 import {firebaseRef} from '../services/firebase';
 import firebase from 'firebase';
-//get screen info
+//get screen width and height
 var Dimensions = require('Dimensions');
 var width = Dimensions.get('window').width;
-//https://www.youtube.com/watch?v=7lEU1UEw3YI&t=765s storing data in the database
-//https://medium.com/the-many/adding-login-and-authentication-sections-to-your-react-or-react-native-app-7767fd251bd1
-//fblogin
-//https://invertase.io/react-native-firebase/#/modules/authentication?id=auth
-/*import external component*/
 import Register from './Register';
-import MyPage from './MinePage';
 import FillingForm from './FillingForm'
+import FillingEventForm from './FillingEventForm'
+import FillingBoxOfficeForm from './FillingBoxOfficeForm'
 export default class Mine extends Component{
   constructor(props) {
     super(props);
@@ -62,6 +58,22 @@ export default class Mine extends Component{
             });
         }
   }
+  _SubmitPage2(){
+    const { navigator } = this.props;
+    if(navigator) {
+      navigator.push({
+        component: FillingEventForm,
+        });
+    }
+  }
+  _SubmitBOFPage(){
+        const { navigator } = this.props;
+        if(navigator) {
+          navigator.push({
+            component: FillingBoxOfficeForm,
+            });
+        }
+  }
   //email login
   async _login(){
     try{
@@ -92,7 +104,7 @@ export default class Mine extends Component{
           console.log("error", err.code, err.message);
         }
     }
-
+//Google Signin Setup
   async _setupGoogleSignin() {
     try {
       await GoogleSignin.hasPlayServices({ autoResolve: true });
@@ -208,7 +220,7 @@ export default class Mine extends Component{
       if (!this.state.user) {
         return (
             <View style={styles.container}>
-              <Image source={{uri: 'https://basement-theatre.squarespace.com/assets/images/logo-expanded.png'}} style={styles.itemStyle}>
+              <Image source={require('../images/Basement Theatre Logo - Black.jpg')} style={styles.itemStyle}>
 
               {/*use View to make username txt box*/}
                 <View style={styles.LoginBox}>
@@ -236,9 +248,14 @@ export default class Mine extends Component{
                         secureTextEntry={true}
                       onChangeText={(text) => this.setState({password: text})}/>
                 </View>
+                {/*Reset the password via Email*/}
                 <TouchableOpacity onPress={() => {this._ResetPassword(); }}>
                  <View>
-                     <Text>Forgot Password?</Text>
+                     <Text style={{fontFamily:'GT-Haptik-Regular',
+                                    alignSelf: 'center',
+                                    marginLeft:-30,
+                                    marginTop:5}}>
+                      Forgot Password?</Text>
                  </View>
 
                </TouchableOpacity>
@@ -273,43 +290,36 @@ export default class Mine extends Component{
     if (this.state.user) {
        return (
          <View style={styles.container}>
-           <Text style={{fontSize: 18, fontWeight: 'bold', marginBottom: 20}}>Welcome {this.state.user.name}</Text>
-           <Text>Your email is: {this.state.user.email}</Text>
+           <Text style={{fontSize: 24, fontFamily:'GT-Haptik-Bold', marginBottom: 20,alignSelf:'center', marginTop:20}}>Welcome {this.state.user.name}</Text>
+           <Text style={{fontFamily:'GT-Haptik-Regular',alignSelf:'center'}}>Your email is: {this.state.user.email}</Text>
 
            <TouchableOpacity onPress={() =>{this._SubmitPage();}}>
-               {/*login button*/}
-               <View style={styles.textLoginViewStyle}>
-                   <Text style={styles.textLoginStyle}>Submition Form</Text>
+               {/*Submission Form*/}
+               <View style={[styles.textLoginViewStyle,{marginRight:0}]}>
+                   <Text style={styles.textLoginStyle}>Submission Form</Text>
+               </View>
+           </TouchableOpacity>
+           <TouchableOpacity onPress={() =>{this._SubmitPage2();}}>
+               {/*Submission Form*/}
+               <View style={[styles.textLoginViewStyle,{marginRight:0}]}>
+                   <Text style={styles.textLoginStyle}>Submission Form v2.0</Text>
+               </View>
+           </TouchableOpacity>
+           <TouchableOpacity onPress={() =>{this._SubmitBOFPage();}}>
+               {/*Box Office Form*/}
+               <View style={[styles.textLoginViewStyle,{marginRight:0}]}>
+                   <Text style={styles.textLoginStyle}>Box Office Form</Text>
                </View>
            </TouchableOpacity>
 
            <TouchableOpacity onPress={() => {this._signOut(); }}>
-             <View style={styles.LogoutViewStyle}>
+             <View style={[styles.LogoutViewStyle,{marginRight:0}]}>
                <Text style={styles.textLoginStyle}>Log out</Text>
              </View>
            </TouchableOpacity>
          </View>
        );
      }
-    //  if (this.state.status) {
-    //     return (
-    //       <View style={styles.container}>
-    //         <Text style={{fontSize: 18, fontWeight: 'bold', marginBottom: 20}}>Welcome {this.state.email}</Text>
-    //         <Text>Your password is: {this.state.password}</Text>
-    //         <TouchableOpacity onPress={() => {this._signOut(); }}>
-    //           <View style={styles.LogoutViewStyle}>
-    //             <Text style={styles.textLoginStyle}>Log out</Text>
-    //           </View>
-    //         </TouchableOpacity>
-    //         <WebView
-    //           startInLoadingState={true}
-    //           contentInset={{top:20,left:10,right:10}}
-    //           scalesPageToFit ={false}
-    //           source={{uri: 'https://docs.google.com/forms/d/1QypBHmk8ktWXmobJ1HTF3JyiduykRsMVmm96kqVT_O0/viewform?edit_requested=true'}}
-    //         />
-    //       </View>
-    //     );
-    //   }
   }
 }
 
@@ -317,21 +327,21 @@ const styles = StyleSheet.create({
     container: {
         //set to full screen
         flex: 1,
-        backgroundColor:'#F5F5F5',
+        backgroundColor:'white',
     },LoginBox:{
       paddingTop:70,
     },
     textInputViewStyle: {
         width: width - 90,
         height: 45,
-        borderRadius: 10,
-        borderColor: 'rgba(114,83,52,1)',
+        borderColor: 'black',
         borderWidth: 2,
         marginTop:10,
         alignSelf: 'flex-start',
     },
     //txt box style
     textInputStyle: {
+        fontFamily:'GT-Haptik-Regular',
         width: width - 30,
         height: 35,
         backgroundColor: '#00000000',
@@ -343,8 +353,7 @@ const styles = StyleSheet.create({
     textLoginViewStyle: {
         width: 200,
         height: 45,
-        backgroundColor: 'rgba(69,137,148,.9)',
-        borderRadius: 10,
+        backgroundColor: 'black',
         marginTop: 20,
         marginRight:60,
         alignSelf: 'center',
@@ -354,7 +363,6 @@ const styles = StyleSheet.create({
     textgoogleLoginViewStyle: {
         width: 190,
         height: 45,
-        borderRadius: 10,
         marginTop: 20,
         marginRight:60,
         alignSelf: 'center',
@@ -364,7 +372,6 @@ const styles = StyleSheet.create({
     textfbLoginViewStyle: {
         width: 250,
         height: 45,
-        borderRadius: 10,
         marginTop: 25,
         marginRight:60,
         alignSelf: 'center',
@@ -374,8 +381,7 @@ const styles = StyleSheet.create({
     LogoutViewStyle:{
       width: 200,
       height: 45,
-      backgroundColor: 'rgba(255,0,0,.9)',
-      borderRadius: 10,
+      backgroundColor: 'black',
       marginTop: 20,
       marginRight:60,
       alignSelf: 'center',
@@ -384,9 +390,11 @@ const styles = StyleSheet.create({
     },
     //"Login" style
     textLoginStyle: {
+        fontFamily:'GT-Haptik-Regular',
         fontSize: 18,
         color: 'white',
-    },itemStyle:{
+    },
+    itemStyle:{
       position:'absolute',
       left:10,
       height:350,

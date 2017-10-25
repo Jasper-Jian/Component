@@ -12,11 +12,13 @@ import {
 const StylesSheet = StyleSheet.create({
   container:{
     flexDirection:'column',
+    backgroundColor:'rgba(2,0,252,1)',
   },
   itemStyle: {
       width:Dimensions.get('window').width,
       height:200,
-      resizeMode: 'stretch'
+      resizeMode: 'stretch',
+      backgroundColor:'rgba(2,0,252,1)'
   },
   tabHeading:{
     height: 200,
@@ -36,20 +38,21 @@ const StylesSheet = StyleSheet.create({
   TitleStyle:{
     bottom:25,
     width: Dimensions.get('window').width,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: 'rgba(2,0,252,1)',
     alignItems:'center',
     paddingBottom:50,
   },
   TitleText:{
+    paddingTop:5,
+    fontFamily:'GT-Haptik-Bold',
     fontSize:30,
-    color:'black',
-    fontWeight:'500',
-    marginRight:120,
+    color:'white',
+    alignSelf: 'center',
   },
   MoreInfoText:{
-    marginTop:5,
+    fontFamily:'GT-Haptik-Regular',
+    marginTop:8,
     color:'white',
-    fontWeight:'300',
     fontSize: 15,
     alignSelf: 'center',
     justifyContent: 'center',
@@ -69,23 +72,23 @@ const StylesSheet = StyleSheet.create({
     width: Dimensions.get('window').width-30,
   },
   DetailText:{
-    color:'rgba(1,165,175,1)',
+    fontFamily:'GT-Haptik-Bold',
+    color:'rgba(2,0,252,1)',
     fontSize:20,
     justifyContent:'flex-start',
     marginLeft:15,
-    fontWeight:'800',
   },
   Divider:{
     marginLeft:15,
     borderStyle:'solid',
     borderBottomWidth:1,
     width: Dimensions.get('window').width-60,
-    borderBottomColor : 'rgba(1,165,175,1)',
+    borderBottomColor : 'rgba(2,0,252,1)',
   },
   TimeText:{
+    fontFamily:'GT-Haptik-Regular',
     marginLeft:15,
-    color:'rgba(1,165,175,1)',
-    fontWeight:'400',
+    color:'rgba(2,0,252,1)',
   },
   InfoBTStyle:{
     flexDirection:'row',
@@ -94,7 +97,7 @@ const StylesSheet = StyleSheet.create({
     marginLeft:15,
     width: (Dimensions.get('window').width-60)/2,
     height: 35,
-    backgroundColor: 'rgba(1,165,175,1)',
+    backgroundColor: 'rgba(2,0,252,1)',
     marginTop: 10,
     alignSelf: 'center',
     justifyContent: 'flex-start',
@@ -107,7 +110,7 @@ const StylesSheet = StyleSheet.create({
     height: 35,
     backgroundColor: 'white',
     borderStyle:'solid',
-    borderColor : 'rgba(1,165,175,1)',
+    borderColor : 'rgba(2,0,252,1)',
     borderWidth:0.8,
     marginTop: 10,
     alignSelf: 'center',
@@ -115,9 +118,9 @@ const StylesSheet = StyleSheet.create({
     alignItems: 'center',
   },
   BookNowText:{
-    marginTop:5,
-    color:'rgba(1,165,175,1)',
-    fontWeight:'300',
+    fontFamily:'GT-Haptik-Regular',
+    marginTop:8,
+    color:'rgba(2,0,252,1)',
     fontSize: 15,
     alignSelf: 'center',
     justifyContent: 'center',

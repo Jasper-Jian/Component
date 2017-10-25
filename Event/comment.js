@@ -7,7 +7,6 @@ import {
     Image,
     TouchableHighlight,
     TouchableOpacity,
-    Platform,
     Dimensions,
     InteractionManager,
     ScrollView,
@@ -87,7 +86,7 @@ export default class comment extends Component {
           }
           query.push(data);
           update_query.update({score:average});
-          
+
           ToastAndroid.show('Upload successful', ToastAndroid.SHORT);
         }else{
           ToastAndroid.show('Please select a score', ToastAndroid.SHORT);
@@ -196,9 +195,9 @@ export default class comment extends Component {
                 <TextInput
                     multiline={true}
                     autoFocus={false}
-                    placeholder='Enter your comment'
-                    placeholderTextColor='#999999'
-                    style={[styles.textInput, styles.marginLeftRight, {marginTop: 10, height: this.state.evaluateTextInpuHeight}]}
+                    placeholder='Enter comment here'
+                    placeholderTextColor='white'
+                    style={[styles.textInput, styles.marginLeftRight, {marginTop: 10,color:'white',borderWidth:1, borderColor:'white',marginRight: 10, marginLeft: 10, height: this.state.evaluateTextInpuHeight}]}
                     underlineColorAndroid='transparent'
                     value={this.state.evaluateText}
                     editable={true}
@@ -229,30 +228,30 @@ export default class comment extends Component {
 let styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#C0CCD9',
+        backgroundColor: 'rgba(2,0,252,1)',
     },
     columnContainer: {
         flexDirection: 'column',
         justifyContent: 'flex-start' && 'center',
-        backgroundColor: '#C0CCD9',
+        backgroundColor: 'rgba(2,0,252,1)',
     },
     text: {
+        fontFamily:'GT-Haptik-Regular',
         fontSize: 14,
-        color: '#3B3B3B',
+        color: 'white',
     },
     textInput: {
-        flex: 0,
         minHeight: 40,
-        backgroundColor: 'white',
-        padding: 0,
+        backgroundColor: 'transparent',
+        paddingLeft: 10,
+        fontFamily:'GT-Haptik-Regular',
         fontSize: 14,
-        color: '#3B3B3B',
     },
     starRating: {
         flex: 0,
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        backgroundColor: '#C0CCD9',
+        backgroundColor: 'rgba(2,0,252,1)',
     },
     marginLeftRight: {
         marginLeft: 10,
@@ -264,7 +263,7 @@ let styles = StyleSheet.create({
     },
     button:{
       paddingTop: 20,
-      backgroundColor: '#C0CCD9',
+      backgroundColor: 'rgba(2,0,252,1)',
       flexDirection: 'row',
       height: 85,
       marginLeft: 50,
@@ -272,15 +271,14 @@ let styles = StyleSheet.create({
     buttonStyle: {
         width: 100,
         height: 45,
-        backgroundColor: 'rgba(206,60,100,1)',
-        borderRadius: 20,
+        backgroundColor: 'rgba(0,250,0,1)',
         justifyContent: 'center',
     },
     ButtonText:{
+      fontFamily:'GT-Haptik-Regular',
       marginTop:2,
-      color:'white',
+      color:'black',
       fontSize: 20,
-      fontWeight:'600',
       alignSelf: 'center',
       justifyContent: 'center',
       alignItems: 'center',
@@ -293,17 +291,17 @@ let styles = StyleSheet.create({
     breakLineItem: {
         marginLeft: 10,
         marginRight: 10,
-        backgroundColor: '#efeff4',
+        backgroundColor: 'white',
         height: 1
     },
     // 长分割线
     breakLongLineItem: {
-        backgroundColor: '#efeff4',
+        backgroundColor: 'white',
         height: 1
     },
     // 高分割框
     breakBoldLineItem: {
-        backgroundColor: '#efeff4',
+        backgroundColor: 'white',
         height: 10
     },
 });

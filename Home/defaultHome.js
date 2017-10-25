@@ -25,7 +25,6 @@ import BookingSite from '../Event/BookingSite';
 var query = firebase.database().ref("2017/HomePage");
 import {firebaseRef} from '../services/firebase';
 import firebase from 'firebase';
-var ImageData = require('../ImageData.json');
 var TimerMixin = require('react-timer-mixin');//import timer
 
 let {width,height} = Dimensions.get('window');
@@ -165,16 +164,13 @@ export default class defaultHome extends Component{
           renderTabBar={()=><DefaultTabBar backgroundColor='rgba(255, 255, 255, 0.7)' />}
           tabBarPosition='overlayBottom'
           tabBarBackgroundColor='rgba(0, 0, 0, 0.3)'
-          tabBarActiveTextColor='blue'
+          tabBarActiveTextColor='rgba(2,0,252,1)'
           tabBarInactiveTextColor='white'
           tabBarUnderlineColor='black'
-          tabBarTextStyle={{fontSize: 12}}
+          tabBarTextStyle={{fontSize: 12, fontFamily:'GT-Haptik-Regular',}}
         >
         <View tabLabel='01'>
-        {/* <TouchableOpacity onPress={console.log(this.state.dataSource)}> */}
-
         <Image key={1} source={{uri:this.state.image[0].image.imagelink}} style={styles.itemStyle}/>
-        {/* </TouchableOpacity> */}
         </View>
         <View tabLabel='02'>
         <Image key={2} source={{uri:this.state.image[1].image.imagelink}} style={styles.itemStyle}/>
@@ -188,7 +184,7 @@ export default class defaultHome extends Component{
         </ScrollableTabView>
 
       <View style={styles.TitleStyle}>
-          <Text style={styles.TitleText}>WHAT‘S ON</Text>
+          <Text style={styles.TitleText}>WHAT’S ON</Text>
           <ListView
             dataSource={this.state.dataSource}
             renderRow={this._renderRow.bind(this)}

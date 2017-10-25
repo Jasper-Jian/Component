@@ -15,10 +15,8 @@ import {
 } from 'react-native';
 
 import Mainstyles from '../StylesSheet';
-import Event from '../Event/BTEventDetail';
 import review from '../Event/review';
 var {width}=Dimensions.get('window').width;
-var DEFAULT_URL = 'https://www.iticket.co.nz/events/2017/may/the-faustus-project';
 export default class EventDetails extends Component{
   constructor(props){
     super(props);
@@ -49,7 +47,7 @@ export default class EventDetails extends Component{
         </TouchableOpacity>
         <Text style={styles.headText}>{this.props.data.title}</Text>
         </View>
-        <Image key={1} source={{uri:this.props.data.images}} style={Mainstyles.itemStyle}/>
+        
       <Navigator
           initialRoute = {{
             name: defaultName,
@@ -72,12 +70,12 @@ export default class EventDetails extends Component{
 const styles = StyleSheet.create({
   container:{
     flexDirection:'column',
-    backgroundColor:'#C0CCD9',
+    backgroundColor:'rgba(2,0,252,1)',
     flex:1,
   },
   titleText: {
+    fontFamily:'GT-Haptik-Bold',
     color:'black',
-    fontWeight:'bold',
     fontSize: 24,
     lineHeight: 30,
   },
@@ -86,25 +84,26 @@ const styles = StyleSheet.create({
       paddingLeft: 10,
       paddingRight: 50,
       paddingTop: 0,
-      backgroundColor: '#C0CCD9',
+      backgroundColor: 'white',
       alignItems: 'center',
   },
   headText: {
+    fontFamily:'GT-Haptik-Bold',
     paddingTop: 0,
     paddingLeft: 15,
-    color:'black',
+    color:'rgba(2,0,252,1)',
     fontSize:24,
-    fontWeight:'bold',
     textAlign :'center',
 
   },
   EventTimeText:{
+    fontFamily:'GT-Haptik-Regular',
     color:'white',
     fontSize:18,
-    fontWeight:'400',
   },
   EventImageBox:{
       flexDirection:'row',
+      backgroundColor:'rgba(2,0,252,1)'
   },
   DetailBox:{
     justifyContent:'flex-start',
@@ -112,6 +111,7 @@ const styles = StyleSheet.create({
     alignItems:'flex-start',
     paddingLeft: 30,
     paddingRight: 30,
+    backgroundColor:'rgba(2,0,252,1)',
   },
   Divider:{
     borderStyle:'solid',
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     borderBottomColor : 'white',
   },
   MoreInfoText:{
-    color:'black',
+    color:'white',
     fontWeight:'400',
     alignSelf: 'center',
     justifyContent: 'center',
@@ -137,16 +137,21 @@ const styles = StyleSheet.create({
       alignItems: 'center',
   },
   ButtonText:{
+    fontFamily:'GT-Haptik-Regular',
     marginTop:2,
     color:'white',
     fontSize: 20,
-    fontWeight:'600',
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
   },
   space:{
     height: 80,
-    backgroundColor: 'transparent',
+    backgroundColor: 'rgba(2,0,252,1)',
+  },
+  backButton: {
+      height: 35,
+      width: 35,
+      resizeMode: 'stretch',
   },
 });

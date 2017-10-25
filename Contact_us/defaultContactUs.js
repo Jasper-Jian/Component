@@ -19,11 +19,13 @@ import Support from '../More/Support';
 export default class defaultContactUs extends Component{
   constructor (props) {
   super(props);
+  this.textHeightMax = 150;
   this.state = {
     email: '',
     firstName: '',
     lastName:'',
-    message:''
+    message:'',
+    TextInpuHeight: this.textHeightMax,
   }
 }
 
@@ -115,8 +117,8 @@ export default class defaultContactUs extends Component{
 
       <View style={styles.messageBox}>
 
-      <Text style={styles.bigText}>
-      FIND US ON SOCIAL MEDIA
+      <Text style={[styles.bigText,{alignSelf:'center'}]}>
+      SOCIAL MEDIA
       </Text>
 
       <View style={{flexDirection:'row',alignSelf:'center',marginTop:10}}>
@@ -186,16 +188,26 @@ export default class defaultContactUs extends Component{
       Message
       </Text>
 
-      <View style={[styles.inputBox,{height:100}]}>
+      <View style={[styles.LargeinputBox,{height:this.state.TextInpuHeight}]}>
       <TextInput
-          style={styles.inputText}
-          keyboardType='web-search'
-          placeholder='Enter your message here'
-          underlineColorAndroid={'transparent'}
-          onChangeText={(text) => this.setState({message: text})}
+        multiline={true}
+        autoFocus={false}
+        placeholder='Enter your message here'
+        style={[styles.inputText, { height: this.state.TextInpuHeight}]}
+        underlineColorAndroid='transparent'
+        value={this.state.message}
+        editable={true}
+        onChange={(event) => {
+            let textHeight = event.nativeEvent.contentSize.height > this.textHeightMax ? event.nativeEvent.contentSize.height : this.textHeightMax;
+            this.setState({
+                TextInpuHeight: textHeight,
+            });
+        }}
+        onChangeText={(text) => {
+            this.setState({ message: text });
+        }}
       />
       </View>
-
       <TouchableOpacity onPress={() => {this.submit();}}>
         <View style={styles.buttonStyle}>
             <Text style={styles.ButtonText}>Submit</Text>
@@ -249,15 +261,15 @@ const styles = StyleSheet.create({
       paddingRight: 10,
       paddingTop: 0,
       height: 48,
-      backgroundColor: '#C0CCD9',
+      backgroundColor: 'white',
       alignItems: 'center',
 
   },
   headText: {
+    fontFamily:'GT-Haptik-Bold',
     paddingTop: 8,
-    color:'black',
+    color:'rgb(2,0,252)',
     fontSize:24,
-    fontWeight:'bold',
     textAlign :'center',
 
   },
@@ -274,10 +286,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   bigText:{
+    fontFamily:'GT-Haptik-Bold',
     fontSize: 24,
     color: 'black',
     lineHeight: 30,
-    fontWeight:'bold',
 
   },
   icon: {
@@ -294,6 +306,7 @@ const styles = StyleSheet.create({
     paddingRight:30,
   },
   textStyle:{
+    fontFamily:'GT-Haptik-Regular',
     fontSize: 16,
     color: 'black',
     lineHeight: 30,
@@ -308,7 +321,15 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       marginTop:10,
   },
+  LargeinputBox: {
+      height: 100,
+      backgroundColor: 'white',
+      borderColor: 'black',
+      borderWidth: 1,
+      marginTop:10,
+  },
   inputText: {
+      fontFamily:'GT-Haptik-Regular',
       flex: 1,
       backgroundColor: 'transparent',
       fontSize: 14,
@@ -325,9 +346,9 @@ const styles = StyleSheet.create({
       alignSelf: 'center',
   },
   ButtonText:{
+    fontFamily:'GT-Haptik-Regular',
     color:'white',
     fontSize: 20,
-    fontWeight:'300',
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
@@ -341,6 +362,7 @@ const styles = StyleSheet.create({
     borderBottomColor : 'rgba(1,165,175,1)',
   },
   textStyle:{
+    fontFamily:'GT-Haptik-Regular',
     fontSize: 16,
     color: 'black',
     lineHeight: 30,

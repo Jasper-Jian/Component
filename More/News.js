@@ -30,6 +30,7 @@ export default class News extends Component {
               style={styles.backButton}
         />
       </TouchableOpacity>
+      <Text style={styles.headText}>News</Text>
       </View>
       <WebView
         startInLoadingState={true}
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
     container: {
         //set to full screen
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: 'rgba(2,0,252,1)',
     },
     headImage: {
       width:Dimensions.get('window').width,
@@ -59,12 +60,21 @@ const styles = StyleSheet.create({
         paddingRight: 10,
         paddingTop: 0,
         height: 48,
-        backgroundColor: '#C0CCD9',
+        backgroundColor: 'white',
         alignItems: 'center',
     },
     backButton: {
         height: 35,
         width: 35,
         resizeMode: 'stretch',
+    },
+    headText: {
+      fontFamily: 'GT-Haptik-Bold',
+      paddingTop: 0,
+      paddingLeft: (Dimensions.get('window').width-35)/4,
+      color:'rgba(2,0,252,1)',
+      fontSize:24,
+      textAlign :'center',
+
     },
   })

@@ -30,7 +30,7 @@ export default class FillingForm extends Component {
               style={styles.backButton}
         />
       </TouchableOpacity>
-      <Text style={styles.headText}>Submition Form for Artist</Text>
+      <Text style={styles.headText}>Submission Form for Artist</Text>
       </View>
       <WebView
         startInLoadingState={true}
@@ -55,11 +55,11 @@ const styles = StyleSheet.create({
       resizeMode: 'stretch'
     },
     headText: {
+      fontFamily: 'GT-Haptik-Bold',
       paddingTop: 0,
       paddingLeft: 15,
-      color:'black',
+      color:'rgba(2,0,252,1)',
       fontSize:24,
-      fontWeight:'bold',
       textAlign :'center',
 
     },
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
         paddingRight: 10,
         paddingTop: 0,
         height: 48,
-        backgroundColor: '#C0CCD9',
+        backgroundColor: 'white',
         alignItems: 'center',
     },
     backButton: {

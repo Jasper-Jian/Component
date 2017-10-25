@@ -18,6 +18,7 @@ var query = firebase.database().ref("2017/HomePage");
 import styles from '../StylesSheet';
 import {firebaseRef} from '../services/firebase';
 import firebase from 'firebase';
+import BookingSite from '../Event/BookingSite';
 export default class defaultEvent extends Component{
   constructor(props){
     super(props);
@@ -66,6 +67,20 @@ export default class defaultEvent extends Component{
         navigator.push({
           title: data.data.title,
           component: EventDetails,
+            params: {
+                data: data.data,
+            }
+          });
+      }
+  }
+  pushToBooking(data){
+    let _this = this;
+      const { navigator } = this.props;
+      if(navigator) {
+        console.log(data.data.title);
+        navigator.push({
+          title: data.data.title,
+          component: BookingSite,
             params: {
                 data: data.data,
             }
@@ -168,7 +183,7 @@ export default class defaultEvent extends Component{
       return (
         <View style={styles.container}>
         <View style={Eventstyles.headerBarContainer}>
-        <Text style={Eventstyles.headText}>What‘s On</Text>
+        <Text style={Eventstyles.headText}>What’s On</Text>
         </View>
         <ScrollView>
         <Image source={require('../images/whats_on_head_image.png')}
@@ -177,15 +192,19 @@ export default class defaultEvent extends Component{
                         height:(Dimensions.get('window').width)/2}}
           />
           <ScrollableTabView
+          style={{marginTop: 10}}
           renderTabBar={() => <DefaultTabBar />}
-          tabBarUnderlineColor='black'
-          tabBarBackgroundColor='#C0CCD9'
-          tabBarActiveTextColor='black'
-          tabBarInactiveTextColor='black'
           tabBarTextStyle={{fontSize: 18}}
+          tabBarUnderlineColor='white'
+          tabBarBackgroundColor='rgba(2,0,252,1)'
+          tabBarActiveTextColor='white'
+          tabBarInactiveTextColor='white'
+
           >
 
-        <View tabLabel='On This Week'>
+        <View tabLabel='On This Week'
+              style={{alignSelf: 'center'}}
+        >
            <ListView
              pageSize={4}
              initialListSize={10}
@@ -216,7 +235,7 @@ export default class defaultEvent extends Component{
 const Eventstyles = StyleSheet.create({
   container: {
     flexDirection:'column',
-    backgroundColor:'#F5F5F5',    
+    backgroundColor:'#F5F5F5',
   },
   headerBarContainer: {
       flexDirection: 'column',
@@ -224,20 +243,20 @@ const Eventstyles = StyleSheet.create({
       paddingRight: 10,
       paddingTop: 0,
       height: 48,
-      backgroundColor: '#C0CCD9',
+      backgroundColor: 'white',
   },
   headText: {
+    fontFamily:'GT-Haptik-Bold',
     paddingTop: 8,
-    color:'black',
+    color:'rgba(2,0,252,1)',
     fontSize:24,
-    fontWeight:'bold',
     textAlign :'center',
 
   },
   EventTimeText:{
+    fontFamily:'GT-Haptik-Regular',
     color:'black',
     fontSize:18,
-    fontWeight:'400',
   },
   EventImageBox:{
     flexDirection:'row',
@@ -258,13 +277,13 @@ const Eventstyles = StyleSheet.create({
     borderBottomColor : 'black',
   },
   ComingSoonText:{
+    fontFamily:'GT-Haptik-Regular',
     fontSize:20,
     color:'black',
     paddingTop:5,
     paddingBottom:5,
     backgroundColor:'transparent',
     color:'black',
-    fontWeight:'500',
     marginRight:130,
   },
   paddingBottom:{

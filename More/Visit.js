@@ -29,6 +29,7 @@ export default class Visit extends Component {
               style={styles.backButton}
         />
       </TouchableOpacity>
+      <Text style={styles.headText}>Visit</Text>
       </View>
       <ScrollView>
         <Image source={require('../images/Visit_Head_Image.png')}
@@ -49,12 +50,12 @@ export default class Visit extends Component {
           <Text style={styles.textStyle}>
           {'\n'}
 
-          <Text style={{fontWeight:'bold',fontSize: 21}}>
+          <Text style={{fontFamily:'GT-Haptik-Bold',fontSize: 21}}>
           ADDRESS{'\n'}
           </Text>
           Lower Greys Avenue (by Civic Carpark){'\n'}
           Auckland CBD 1010{'\n'}{'\n'}
-          <Text style={{fontWeight:'bold',fontSize: 21}}>
+          <Text style={{fontFamily:'GT-Haptik-Bold',fontSize: 21}}>
           VENUE HOURS{'\n'}
           </Text>
           Tue-Sat 5pm - late{'\n'}{'\n'}
@@ -99,13 +100,22 @@ const styles = StyleSheet.create({
         paddingRight: 10,
         paddingTop: 0,
         height: 48,
-        backgroundColor: '#C0CCD9',
+        backgroundColor: 'white',
         alignItems: 'center',
     },
     backButton: {
         height: 35,
         width: 35,
         resizeMode: 'stretch',
+    },
+    headText: {
+      fontFamily: 'GT-Haptik-Bold',
+      paddingTop: 0,
+      paddingLeft: (Dimensions.get('window').width-35)/4,
+      color:'rgba(2,0,252,1)',
+      fontSize:24,
+      textAlign :'center',
+
     },
     textBox:{
       flexDirection: 'column',
@@ -115,15 +125,16 @@ const styles = StyleSheet.create({
       backgroundColor: 'white',
     },
     textStyle:{
+      fontFamily:'GT-Haptik-Regular',
       fontSize: 16,
       color: 'black',
       lineHeight: 30,
     },
     bigText:{
+      fontFamily:'GT-Haptik-Bold',
       fontSize: 24,
       color: 'black',
       lineHeight: 30,
-      fontWeight:'bold',
     },
     mapBox:{
       width: 748,
