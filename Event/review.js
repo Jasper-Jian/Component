@@ -16,7 +16,7 @@ import {
   ActivityIndicator
 } from 'react-native';
 import comment from '../Event/comment';
-import BookingSite from '../Event/BookingSite';
+import BookingSite2 from '../Event/BookingSite2';
 import Mainstyles from '../StylesSheet';
 
 import {firebaseRef} from '../services/firebase';
@@ -90,14 +90,14 @@ export default class review extends Component{
         );
   }
 
- pushToBooking(data){
+ pushToBooking2(data){
    let _this = this;
      const { navigator } = this.props;
      if(navigator) {
        console.log(this.props.data.title);
        navigator.push({
          title: this.props.data.title,
-         component: BookingSite,
+         component: BookingSite2,
            params: {
                data: this.props.data,
            }
@@ -154,7 +154,7 @@ export default class review extends Component{
       PRICE: {this.props.data.price}{'\n'}{'\n'}
       </Text>
       </View>
-      <TouchableOpacity onPress={()=>this.pushToBooking(this.props.data)}>
+      <TouchableOpacity onPress={()=>this.pushToBooking2(this.props.data)}>
         <View style={styles.textLoginViewStyle}>
             <Text style={styles.ButtonText}>Book Now</Text>
         </View>

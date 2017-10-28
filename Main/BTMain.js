@@ -74,7 +74,7 @@ export default class Main extends Component{
                 {/*--Event--*/}
                 <TabNavigator.Item
                     title="What's on"
-                    renderIcon={() => <Image source={require('../images/whats_on_selected.png')} style={styles.iconStyle}/>} // icon
+                    renderIcon={() => <Image source={require('../images/whats_on.png')} style={styles.iconStyle}/>} // icon
                     renderSelectedIcon={() =><Image source={require('../images/whats_on_selected.png')} style={styles.iconStyle}/>}   // when icon selected
                     onPress={()=>{this.setState({selectedTab:'Event'})}}
                     selected={this.state.selectedTab === 'Event'}
