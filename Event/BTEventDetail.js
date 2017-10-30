@@ -47,7 +47,7 @@ export default class EventDetails extends Component{
         </TouchableOpacity>
         <Text style={styles.headText}>{this.props.data.title}</Text>
         </View>
-        
+
       <Navigator
           initialRoute = {{
             name: defaultName,
@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
       paddingTop: 0,
       backgroundColor: 'white',
       alignItems: 'center',
+      height: 48,
   },
   headText: {
     fontFamily:'GT-Haptik-Bold',

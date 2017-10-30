@@ -124,7 +124,7 @@ export default class ForArtist extends Component {
 
         <Text style={styles.textStyle}>
         <Text style={styles.bigText}>
-        PITCH US YOUR SHOW{'\n'}
+        PITCH US YOUR SHOW{'\n'}{'\n'}
         </Text>
         The Basement programmes seasonally, Summer (Jan-Apr), Winter (May-Aug) and Spring (Sep - Dec), and accepts submissions up to one year in advance of a potential season. Download our submission form below, along with our artist info pack for everything you need to know about putting on a show at Basement.
         {'\n'}{'\n'}
@@ -166,6 +166,29 @@ export default class ForArtist extends Component {
         {'\n'}{'\n'}
         </Text>
 
+        </View>
+        <View style={{backgroundColor:'#F5F5F5',
+                      flexDirection: 'column',
+                      paddingTop: 20,
+                      paddingLeft: 30,
+                      paddingRight: 30,}}>
+        <Text style={styles.bigText}>
+        Core Parners{'\n'}
+        </Text>
+        <View style={{flexDirection:'row',alignSelf:'center',marginTop:10}}>
+        <TouchableOpacity onPress={ ()=>{ Linking.openURL('http://www.creativenz.govt.nz')}}>
+        <Image source={require('../images/creative-nz.jpg')}
+                style={[styles.icon, {width: 105, height: 70, marginRight:30}]}/>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={ ()=>{ Linking.openURL('https://foundationnorth.org.nz')}}>
+        <Image source={require('../images/foundation-north.jpg')}
+                style={[styles.icon, {width: 105, height: 70}]}/>
+        </TouchableOpacity>
+        </View>
+        <TouchableOpacity onPress={ ()=>{ Linking.openURL('https://www.aucklandcouncil.govt.nz')}}>
+        <Image source={require('../images/auckland-council.jpg')}
+                style={[styles.icon, {width: 105, height: 70,alignSelf:'center'}]}/>
+        </TouchableOpacity>
         </View>
       </ScrollView>
       </View>
@@ -216,21 +239,21 @@ const styles = StyleSheet.create({
     },
     textStyle:{
       fontFamily:'GT-Haptik-Regular',
-      fontSize: 16,
+      fontSize: 14,
       color: 'black',
-      lineHeight: 30,
+      lineHeight: 20,
     },
     middleBigText:{
       fontFamily:'GT-Haptik-Bold',
-      fontSize: 20,
+      fontSize: 17,
       color: 'black',
-      lineHeight: 30,
+      lineHeight: 20,
     },
     bigText:{
       fontFamily:'GT-Haptik-Bold',
-      fontSize: 24,
+      fontSize: 20,
       color: 'black',
-      lineHeight: 30,
+      lineHeight: 20,
     },
     imagesBox:{
       width: 748,
@@ -256,23 +279,7 @@ const styles = StyleSheet.create({
     ButtonText:{
       fontFamily:'GT-Haptik-Regular',
       color:'white',
-      fontSize: 20,
-      alignSelf: 'center',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    buttonStyle: {
-        width: 250,
-        height: 50,
-        marginTop:20,
-        backgroundColor: 'black',
-        justifyContent: 'center',
-        alignSelf: 'center',
-    },
-    ButtonText:{
-      fontFamily:'GT-Haptik-Regular',
-      color:'white',
-      fontSize: 20,
+      fontSize: 17,
       alignSelf: 'center',
       justifyContent: 'center',
       alignItems: 'center',

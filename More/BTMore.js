@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   container: {
     flex:1,
     flexDirection:'column',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: 'white',
   },
   headImage: {
     width:Dimensions.get('window').width,

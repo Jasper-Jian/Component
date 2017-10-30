@@ -12,8 +12,7 @@ import {
   Linking,
 } from 'react-native';
 
-
-export default class Visit extends Component {
+export default class LoversClub extends Component {
   clickJump(){
     const{navigator} = this.props;
     if(navigator){
@@ -30,60 +29,51 @@ export default class Visit extends Component {
               style={styles.backButton}
         />
       </TouchableOpacity>
-      <Text style={styles.headText}>Visit</Text>
+      <Text style={styles.headText}>Lovers Club</Text>
       </View>
       <ScrollView>
-        <Image source={require('../images/Visit_Head_Image.png')}
+        <Image source={require('../images/LoversClub_Head_Image.png')}
               style={styles.headImage}
         />
-
-
         <View style={styles.textBox}>
-        <Image source={require('../images/map.png')}
-              style={{resizeMode: 'stretch',
-                      width:Dimensions.get('window').width-60,
-                      height:Dimensions.get('window').width-60-160,
-                      marginBottom:20}}
-        />
-        <Image source={require('../images/Visit_img.png')}
-              style={styles.middleImage}
-        />
           <Text style={styles.textStyle}>
-          {'\n'}
-
-          <Text style={{fontFamily:'GT-Haptik-Bold',fontSize: 21}}>
-          ADDRESS{'\n'}
+          The Basement Lovers Club, BLC for short, is our ever-growing group of ardent Basement supporters. They are people with a passion for supporting the development of Auckland{"'"}s brightest emerging talent. They believe in offering affordable arts experiences.
+          {'\n'}{'\n'}
+          They are people like you.
+          {'\n'}{'\n'}
+          And the ways that they support us are as diverse as they are. Some like to support us for a particular activity (like our Schools Programme), while others prefer to collaborate, giving their time and expertise. Some just hand us a paper bag full of unmarked bills and we don’t ask any questions.
+          {'\n'}{'\n'}
+          Regardless of how they show us love, we love them all back equally, and we guarantee that if you choose to support the Basement we will love you too. So email us at
+          {' '}
+          <Text style={{textDecorationLine: 'underline'}}>
+          lovers@basementtheatre.co.nz
           </Text>
-          Lower Greys Avenue (by Civic Carpark){'\n'}
-          Auckland CBD 1010{'\n'}{'\n'}
-          <Text style={{fontFamily:'GT-Haptik-Bold',fontSize: 21}}>
-          VENUE HOURS{'\n'}
+          {' '}to start something beautiful. You won’t regret it.
+          {'\n'}{'\n'}
+          Love,{'\n'}
+          The Basement xx{'\n'}
+          P.S. If you can’t wait or want to keep your love more low key then you can donate now on{' '}
+          <Text style={{textDecorationLine: 'underline'}} onPress={() => {Linking.openURL('https://givealittle.co.nz/org/thebasement')}}>
+          Give a Little
           </Text>
-          Tue-Sat 5pm - late{'\n'}{'\n'}
-          <Text style={styles.bigText}>
-          ACCESS{'\n'}
-          </Text>
-          Getting into the Basement if you are in a wheelchair can be a bit tricky. But don’t let it put you off! If you are coming to see a show and need a hand getting in email us at info@basementtheatre.co.nz and we’ll make sure we’re prepared. Please note that at this time Studio shows are not wheelchair accessible.{'\n'}{'\n'}
-          <Text style={styles.bigText}>
-          PARKING{'\n'}
-          </Text>
-          “Is parking close?” we hear you say. “Mate we are in the middle of a car park!” we reply. It opens at 6pm and costs $12. The machines take credit cards, debit cards and cash. If you need change for the machine come and see us when you arrive. If that’s full then there is the Civic Car Park right next door, Wilson Parking across the road, plus on street parking on Greys Ave.{'\n'}{'\n'}
-          <Text style={styles.bigText}>
-          TICKETS AVAILABLE FROM Q THEATRE{'\n'}
-          </Text>
-          Tickets are now available for over the counter purchase at our mates’ place - Q Theatre! Their box office is open from 10am weekdays, or an hour before their own events on weekends.{'\n'}
-          Remember you can always purchase a ticket from our box office between 5.30pm and approximately 8.30pm every Tuesday through Saturday. If there are later shows the box office will be open until 30 minutes after the final start time.{'\n'}
+          .
           {'\n'}{'\n'}
           </Text>
-        </View>
 
+          <Image source={{uri: 'https://static1.squarespace.com/static/5535bce1e4b071a2f7e12732/t/5907f0f29de4bbccbb473ce6/1493692662933/?format=750w'}}
+                style={styles.middleImage}
+          />
+          <View style={styles.Divider}>
+          </View>
+
+        </View>
         <View style={{backgroundColor:'#F5F5F5',
                       flexDirection: 'column',
                       paddingTop: 20,
                       paddingLeft: 30,
                       paddingRight: 30,}}>
         <Text style={styles.bigText}>
-        Core Parners
+        Core Parners{'\n'}
         </Text>
         <View style={{flexDirection:'row',alignSelf:'center',marginTop:10}}>
         <TouchableOpacity onPress={ ()=>{ Linking.openURL('http://www.creativenz.govt.nz')}}>
@@ -100,7 +90,6 @@ export default class Visit extends Component {
                 style={[styles.icon, {width: 105, height: 70,alignSelf:'center'}]}/>
         </TouchableOpacity>
         </View>
-
       </ScrollView>
       </View>
     );
@@ -111,7 +100,7 @@ const styles = StyleSheet.create({
     container: {
         //set to full screen
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: '#F5F5F5',
     },
     headImage: {
       width:Dimensions.get('window').width,
@@ -143,32 +132,36 @@ const styles = StyleSheet.create({
     },
     textBox:{
       flexDirection: 'column',
-      paddingTop: 20,
+      paddingTop: 40,
       paddingLeft: 30,
       paddingRight: 30,
       backgroundColor: 'white',
     },
     textStyle:{
       fontFamily:'GT-Haptik-Regular',
-      fontSize: 16,
+      fontSize: 14,
       color: 'black',
-      lineHeight: 30,
-    },
-    bigText:{
-      fontFamily:'GT-Haptik-Bold',
-      fontSize: 24,
-      color: 'black',
-      lineHeight: 30,
-    },
-    mapBox:{
-      width: 748,
-      height: 312,
-      resizeMode: 'stretch',
+      lineHeight: 20,
     },
     middleImage:{
       width:Dimensions.get('window').width-60,
-      height:373,
+      height:Dimensions.get('window').width-60,
       resizeMode: 'stretch',
       paddingLeft:30,
+      marginBottom: 10,
+      marginTop: 60,
+    },
+    bigText:{
+      fontFamily:'GT-Haptik-Bold',
+      fontSize: 20,
+      color: 'black',
+      lineHeight: 20,
+    },
+    Divider:{
+      marginBottom:60,
+      borderStyle:'solid',
+      borderBottomWidth:1,
+      width: Dimensions.get('window').width-60,
+      borderBottomColor : 'rgba(1,165,175,1)',
     },
   })
