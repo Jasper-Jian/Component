@@ -132,7 +132,7 @@ export default class defaultHome extends Component{
     if(!this.state.loaded){
       return (
         <View>
-            <Text style={styles.titleText}> {'\n'}Loading Detials....{'\n'}</Text>
+            <Text style={styles.titleText}> {'\n'}Loading Details....{'\n'}</Text>
         </View>
 
       );

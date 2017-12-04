@@ -17,7 +17,7 @@ const StylesSheet = StyleSheet.create({
   itemStyle: {
       width:Dimensions.get('window').width,
       height:200,
-      resizeMode: 'stretch',
+      resizeMode: 'cover',
       backgroundColor:'rgba(2,0,252,1)'
   },
   tabHeading:{
